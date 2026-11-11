@@ -3,12 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050b16">
+<meta name="theme-color" content="#050b12">
 
-<title>A.R.I.A. | AI Assistant</title>
+<title>A.R.I.A. 2.0 | Command Centre</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --cyan: #00e5ff;
+    --blue: #087cff;
+    --bg: #050b12;
+    --panel: rgba(8,22,36,.88);
+    --border: rgba(0,229,255,.19);
+    --muted: #718b9e;
+    --white: #e8faff;
+}
 
 * {
     margin: 0;
@@ -16,23 +26,12 @@
     box-sizing: border-box;
 }
 
-:root {
-    --cyan: #00d9ff;
-    --blue: #087cff;
-    --background: #050b16;
-    --panel: rgba(12, 28, 48, 0.72);
-    --border: rgba(0, 217, 255, 0.2);
-    --text: #e8f8ff;
-    --muted: #7693a9;
-}
-
 body {
-    min-height: 100vh;
     background:
-        radial-gradient(ellipse at 50% 35%, #102b48 0%, transparent 55%),
-        var(--background);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
+        radial-gradient(ellipse at center, #10263b 0%, #050b12 65%);
+    color: var(--white);
+    font-family: Inter, sans-serif;
+    min-height: 100vh;
     overflow-x: hidden;
 }
 
@@ -41,17 +40,17 @@ body::before {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: 0.18;
+    opacity: .17;
     background-image:
-        linear-gradient(rgba(0,217,255,.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,217,255,.08) 1px, transparent 1px);
-    background-size: 42px 42px;
-    mask-image: linear-gradient(to bottom, black, transparent 90%);
+        linear-gradient(rgba(0,229,255,.12) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,229,255,.12) 1px,transparent 1px);
+    background-size: 35px 35px;
 }
 
-.container {
-    width: min(1100px, 94%);
+.app {
+    max-width: 1500px;
     margin: auto;
+    padding: 20px;
     position: relative;
     z-index: 1;
 }
@@ -59,206 +58,263 @@ body::before {
 /* HEADER */
 
 header {
-    height: 85px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid var(--border);
+    padding: 15px 5px 22px;
+    gap: 15px;
 }
 
 .logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 23px;
+    font: 700 25px Orbitron;
     letter-spacing: 4px;
     color: var(--cyan);
-    text-shadow: 0 0 15px rgba(0,217,255,.6);
+    text-shadow: 0 0 15px #00e5ff66;
 }
 
-.logo span {
+.logo small {
     display: block;
-    font-family: 'Inter', sans-serif;
-    font-size: 9px;
+    font: 9px Inter;
     letter-spacing: 3px;
     color: var(--muted);
-    margin-top: 5px;
+    margin-top: 7px;
 }
 
-.status {
+.header-right {
+    text-align: right;
     font-size: 10px;
-    letter-spacing: 2px;
-    color: #45f5b4;
-}
-
-.status::before {
-    content: "";
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    background: #45f5b4;
-    border-radius: 50%;
-    margin-right: 8px;
-    box-shadow: 0 0 10px #45f5b4;
-}
-
-/* MAIN */
-
-.hero {
-    text-align: center;
-    padding: 30px 0 15px;
-}
-
-.eyebrow {
-    color: var(--cyan);
-    font-family: 'Orbitron', sans-serif;
-    font-size: 10px;
-    letter-spacing: 4px;
-}
-
-.hero h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(24px, 5vw, 38px);
-    margin-top: 12px;
-    letter-spacing: 5px;
-}
-
-.subtitle {
     color: var(--muted);
-    font-size: 12px;
-    margin-top: 10px;
+    letter-spacing: 1px;
+    line-height: 2;
 }
 
-/* AI CORE */
+.online {
+    color: #4cffb0;
+}
 
-.core-area {
-    height: 300px;
+/* DASHBOARD */
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    gap: 16px;
+    margin-top: 22px;
+}
+
+.column {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 19px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 5px 30px #0005;
+    min-width: 0;
+}
+
+.panel-title {
+    color: var(--cyan);
+    font: 10px Orbitron;
+    letter-spacing: 2px;
+    margin-bottom: 19px;
+}
+
+.label {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.value {
+    font: 13px Orbitron;
+    margin-top: 8px;
+    overflow-wrap: anywhere;
+}
+
+.data-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    font-size: 11px;
+}
+
+.data-row:last-child {
+    border: none;
+}
+
+.data-row span:first-child {
+    color: var(--muted);
+}
+
+.data-row span:last-child {
+    color: var(--cyan);
+    text-align: right;
+}
+
+/* CENTRAL CORE */
+
+.core-section {
+    text-align: center;
+    padding: 10px 0 20px;
+}
+
+.core-section h1 {
+    font: 17px Orbitron;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+}
+
+.core-section p {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.core-wrapper {
+    height: 320px;
+    display: flex;
     align-items: center;
+    justify-content: center;
     position: relative;
 }
 
 .core {
-    width: 175px;
     height: 175px;
+    width: 175px;
     border-radius: 50%;
-    position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: radial-gradient(circle, #0c5e92 0%, #06304f 42%, #041322 72%);
-    box-shadow:
-        0 0 35px rgba(0,217,255,.5),
-        inset 0 0 35px rgba(0,217,255,.5);
-    animation: pulse 3s ease-in-out infinite;
-}
+    justify-content: center;
+    position: relative;
 
-.core::before,
-.core::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid var(--cyan);
+    background:
+        radial-gradient(circle at 35% 30%,
+        #9afaff 0%, #168dc4 15%,
+        #063653 48%, #020b16 75%);
+
+    box-shadow:
+        0 0 25px #00dfff88,
+        0 0 70px #008cff55,
+        inset 0 0 35px #00dfff77;
+
+    animation: breathe 3s infinite ease-in-out;
 }
 
 .core::before {
-    inset: -15px;
-    border-right-color: transparent;
+    content: "";
+    position: absolute;
+    inset: -18px;
+    border: 2px solid var(--cyan);
     border-left-color: transparent;
-    animation: rotate 8s linear infinite;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: rotate 7s linear infinite;
 }
 
 .core::after {
-    inset: -28px;
+    content: "";
+    position: absolute;
+    inset: -35px;
+    border: 1px solid #00e5ff66;
     border-top-color: transparent;
     border-bottom-color: transparent;
-    border-color: rgba(0,217,255,.4);
-    animation: rotate 12s linear infinite reverse;
-}
-
-.core-inner {
-    width: 115px;
-    height: 115px;
     border-radius: 50%;
-    border: 1px solid rgba(0,217,255,.7);
-    background: radial-gradient(circle, #1597cf, #06304f 70%);
-    box-shadow: 0 0 30px rgba(0,217,255,.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    animation: rotate 11s linear infinite reverse;
 }
 
-.core-inner span {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 25px;
-    color: white;
+.core-name {
+    font: 600 23px Orbitron;
+    letter-spacing: 2px;
     text-shadow: 0 0 15px white;
-    letter-spacing: 3px;
+}
+
+.orbit {
+    position: absolute;
+    width: 245px;
+    height: 245px;
+    border: 1px dashed #00e5ff55;
+    border-radius: 50%;
+    animation: rotate 25s linear infinite;
+}
+
+.orbit::before,
+.orbit::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--cyan);
+}
+
+.orbit::before {
+    top: 20px;
+    left: 35px;
+}
+
+.orbit::after {
+    bottom: 30px;
+    right: 20px;
 }
 
 @keyframes rotate {
     to { transform: rotate(360deg); }
 }
 
-@keyframes pulse {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.06); }
+@keyframes breathe {
+    50% {
+        transform: scale(1.06);
+        box-shadow: 0 0 45px #00dfffaa,
+                    0 0 90px #008cff66;
+    }
 }
 
-/* PANELS */
+/* ACTIVITY */
 
-.panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-    backdrop-filter: blur(15px);
-    box-shadow: 0 0 25px rgba(0,0,0,.2);
-}
-
-.panel-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--cyan);
-    margin-bottom: 15px;
-}
-
-.dashboard {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-}
-
-.info {
+.activity {
+    height: 180px;
+    overflow-y: auto;
+    font-size: 11px;
     color: var(--muted);
-    font-size: 10px;
 }
 
-.value {
-    font-size: 14px;
-    margin-top: 8px;
-    color: white;
+.activity div {
+    padding: 10px 0;
+    border-bottom: 1px solid #ffffff0b;
+    line-height: 1.5;
+}
+
+.activity span {
+    color: var(--cyan);
 }
 
 /* CHAT */
 
 .chat-panel {
-    margin-top: 18px;
+    margin-top: 17px;
 }
 
 .messages {
-    height: 190px;
+    height: 175px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     padding: 5px 0 15px;
 }
 
 .message {
     max-width: 85%;
-    padding: 11px 14px;
-    border-radius: 10px;
+    padding: 11px 13px;
+    border-radius: 8px;
     font-size: 12px;
     line-height: 1.6;
     overflow-wrap: anywhere;
@@ -266,13 +322,13 @@ header {
 
 .bot {
     align-self: flex-start;
-    background: rgba(0,217,255,.08);
+    background: #00dfff12;
     border-left: 2px solid var(--cyan);
 }
 
 .user {
     align-self: flex-end;
-    background: rgba(8,124,255,.2);
+    background: #087cff25;
     border-right: 2px solid var(--blue);
 }
 
@@ -280,19 +336,18 @@ header {
     display: flex;
     gap: 8px;
     border-top: 1px solid var(--border);
-    padding-top: 14px;
+    padding-top: 13px;
 }
 
 input {
-    flex: 1;
     min-width: 0;
-    background: rgba(0,0,0,.3);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    flex: 1;
     padding: 13px;
+    background: #020a12;
+    border: 1px solid var(--border);
     color: white;
+    border-radius: 7px;
     outline: none;
-    font-size: 12px;
 }
 
 input:focus {
@@ -300,68 +355,93 @@ input:focus {
 }
 
 button {
+    padding: 11px 15px;
+    background: #00dfff15;
     border: 1px solid var(--border);
-    background: rgba(0,217,255,.12);
     color: var(--cyan);
-    border-radius: 8px;
-    padding: 0 15px;
+    border-radius: 7px;
     cursor: pointer;
-    font-size: 12px;
-    transition: .2s;
-}
-
-button:active {
-    transform: scale(.95);
 }
 
 .send {
-    background: var(--blue);
+    background: #087cff;
     color: white;
-    border-color: var(--blue);
 }
 
 .voice {
-    width: 48px;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .voice.active {
-    background: rgba(255,70,90,.2);
-    border-color: #ff5269;
-    color: #ff5269;
+    background: #ff354522;
+    border-color: #ff3545;
 }
 
 /* FOOTER */
 
 footer {
     text-align: center;
-    padding: 25px 0;
-    color: #536e83;
+    color: #526d80;
     font-size: 9px;
     letter-spacing: 2px;
+    padding: 25px 0 10px;
 }
 
-@media(max-width:600px) {
+/* MOBILE */
+
+@media(max-width:850px) {
     .dashboard {
         grid-template-columns: 1fr 1fr;
     }
 
-    .core-area {
-        height: 270px;
+    .centre-column {
+        grid-column: 1 / -1;
+        grid-row: 1;
+    }
+}
+
+@media(max-width:520px) {
+    .app {
+        padding: 12px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .logo small {
+        font-size: 7px;
+        letter-spacing: 1px;
+    }
+
+    .header-right {
+        font-size: 8px;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .centre-column {
+        grid-column: auto;
+    }
+
+    .core-wrapper {
+        height: 280px;
     }
 
     .core {
-        width: 145px;
-        height: 145px;
+        width: 150px;
+        height: 150px;
     }
 
-    .core-inner {
-        width: 95px;
-        height: 95px;
+    .orbit {
+        width: 220px;
+        height: 220px;
     }
 
-    .hero {
-        padding-top: 25px;
+    .panel {
+        padding: 16px;
     }
 }
 </style>
@@ -369,86 +449,223 @@ footer {
 
 <body>
 
-<div class="container">
+<div class="app">
 
 <header>
     <div class="logo">
         A.R.I.A.
-        <span>ATHUL'S RESPONSIVE INTELLIGENT ASSISTANT</span>
+        <small>INTELLIGENT COMMAND CENTRE</small>
     </div>
-    <div class="status" id="systemStatus">SYSTEM ONLINE</div>
+
+    <div class="header-right">
+        <div class="online">● SYSTEM ONLINE</div>
+        <div id="clock">--:--:--</div>
+        <div id="date">Loading...</div>
+    </div>
 </header>
 
-<section class="hero">
-    <div class="eyebrow">ARTIFICIAL INTELLIGENCE SYSTEM</div>
-    <h1>HOW CAN I HELP?</h1>
-    <p class="subtitle">Your personal intelligent assistant</p>
-</section>
+<main class="dashboard">
 
-<section class="core-area">
-    <div class="core">
-        <div class="core-inner">
-            <span>A.R.I.A.</span>
+<!-- LEFT COLUMN -->
+
+<div class="column">
+
+    <section class="panel">
+        <div class="panel-title">SYSTEM OVERVIEW</div>
+
+        <div class="data-row">
+            <span>Assistant</span>
+            <span>ONLINE</span>
         </div>
-    </div>
-</section>
 
-<section class="dashboard">
+        <div class="data-row">
+            <span>Interface</span>
+            <span>ACTIVE</span>
+        </div>
 
-    <div class="panel">
-        <div class="panel-title">SYSTEM</div>
-        <div class="info">STATUS</div>
-        <div class="value">Operational</div>
-    </div>
+        <div class="data-row">
+            <span>Voice Module</span>
+            <span id="voiceStatus">STANDBY</span>
+        </div>
 
-    <div class="panel">
-        <div class="panel-title">TIME</div>
-        <div class="info">LOCAL TIME</div>
-        <div class="value" id="clock">--:--:--</div>
-    </div>
+        <div class="data-row">
+            <span>AI Connection</span>
+            <span>NOT CONNECTED</span>
+        </div>
+    </section>
 
-    <div class="panel">
-        <div class="panel-title">DATE</div>
-        <div class="info">TODAY</div>
-        <div class="value" id="date">Loading...</div>
-    </div>
+    <section class="panel">
+        <div class="panel-title">DEVICE INFORMATION</div>
 
-</section>
+        <div class="data-row">
+            <span>Browser</span>
+            <span id="browser">Detecting</span>
+        </div>
+
+        <div class="data-row">
+            <span>Platform</span>
+            <span id="platform">Detecting</span>
+        </div>
+
+        <div class="data-row">
+            <span>Screen</span>
+            <span id="screenSize">Detecting</span>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-title">QUICK COMMANDS</div>
+
+        <div class="data-row">
+            <span>Current Time</span>
+            <span>Available</span>
+        </div>
+
+        <div class="data-row">
+            <span>Today's Date</span>
+            <span>Available</span>
+        </div>
+
+        <div class="data-row">
+            <span>Voice Input</span>
+            <span>Experimental</span>
+        </div>
+    </section>
+
+</div>
+
+<!-- CENTRE COLUMN -->
+
+<div class="column centre-column">
+
+    <section class="panel core-section">
+
+        <h1>ARTIFICIAL INTELLIGENCE</h1>
+        <p>Your personal intelligent assistant</p>
+
+        <div class="core-wrapper">
+            <div class="orbit"></div>
+
+            <div class="core">
+                <div class="core-name">A.R.I.A.</div>
+            </div>
+        </div>
+
+        <div class="label" id="coreStatus">
+            ALL SYSTEMS OPERATIONAL
+        </div>
+
+    </section>
+
+    <section class="panel">
+        <div class="panel-title">SYSTEM ACTIVITY</div>
+        <div class="activity" id="activity">
+            <div><span>[SYSTEM]</span> Interface initialized.</div>
+            <div><span>[CORE]</span> AI core active.</div>
+            <div><span>[READY]</span> Awaiting commands.</div>
+        </div>
+    </section>
+
+</div>
+
+<!-- RIGHT COLUMN -->
+
+<div class="column">
+
+    <section class="panel">
+        <div class="panel-title">ENVIRONMENT</div>
+
+        <div class="data-row">
+            <span>Connection</span>
+            <span id="connection">Checking</span>
+        </div>
+
+        <div class="data-row">
+            <span>Language</span>
+            <span id="language">Detecting</span>
+        </div>
+
+        <div class="data-row">
+            <span>Local Time</span>
+            <span>Enabled</span>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-title">CORE STATUS</div>
+
+        <div class="data-row">
+            <span>Interface</span>
+            <span>ACTIVE</span>
+        </div>
+
+        <div class="data-row">
+            <span>Command Engine</span>
+            <span>ACTIVE</span>
+        </div>
+
+        <div class="data-row">
+            <span>AI Intelligence</span>
+            <span>PENDING</span>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-title">ASSISTANT INFORMATION</div>
+
+        <div class="label">PROJECT NAME</div>
+        <div class="value">A.R.I.A. 2.0</div>
+
+        <br>
+
+        <div class="label">DEVELOPER</div>
+        <div class="value">ATHUL KM</div>
+
+        <br>
+
+        <div class="label">SYSTEM VERSION</div>
+        <div class="value">2.0.0</div>
+    </section>
+
+</div>
+
+</main>
+
+<!-- CHAT -->
 
 <section class="panel chat-panel">
 
-    <div class="panel-title">A.R.I.A. COMMUNICATION INTERFACE</div>
+    <div class="panel-title">COMMAND INTERFACE</div>
 
     <div class="messages" id="messages">
         <div class="message bot">
-            Hello! I am A.R.I.A. Your system is online. How may I assist you?
+            Hello! I am A.R.I.A. My command centre is online. How may I assist you?
         </div>
     </div>
 
     <div class="input-area">
-        <button class="voice" id="voiceBtn" title="Voice input">🎙️</button>
+        <button class="voice" id="voiceBtn">🎙️</button>
+
         <input
             type="text"
             id="userInput"
             placeholder="Enter your command..."
-            autocomplete="off"
         >
+
         <button class="send" id="sendBtn">SEND</button>
     </div>
 
 </section>
 
 <footer>
-    A.R.I.A. SYSTEMS © 2026 | ALL SYSTEMS OPERATIONAL
+    A.R.I.A. 2.0 | INTELLIGENT COMMAND CENTRE | 2026
 </footer>
 
 </div>
 
 <script>
-const messages = document.getElementById("messages");
-const input = document.getElementById("userInput");
-const status = document.getElementById("systemStatus");
-const voiceBtn = document.getElementById("voiceBtn");
+
+/* CLOCK */
 
 function updateClock() {
     const now = new Date();
@@ -463,8 +680,70 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
+
+/* DEVICE INFORMATION */
+
+const ua = navigator.userAgent;
+
+document.getElementById("browser").textContent =
+    ua.includes("Safari") && !ua.includes("Chrome")
+    ? "Safari"
+    : ua.includes("Chrome")
+    ? "Chrome"
+    : "Other";
+
+document.getElementById("platform").textContent =
+    navigator.userAgentData?.platform ||
+    navigator.platform ||
+    "Unknown";
+
+document.getElementById("screenSize").textContent =
+    screen.width + " × " + screen.height;
+
+document.getElementById("language").textContent =
+    navigator.language;
+
+function updateConnection() {
+    document.getElementById("connection").textContent =
+        navigator.onLine ? "ONLINE" : "OFFLINE";
+}
+
+updateConnection();
+
+window.addEventListener("online", updateConnection);
+window.addEventListener("offline", updateConnection);
+
+
+/* ACTIVITY LOG */
+
+function logActivity(message) {
+    const activity = document.getElementById("activity");
+    const item = document.createElement("div");
+
+    const time = new Date().toLocaleTimeString();
+
+    const label = document.createElement("span");
+    label.textContent = "[" + time + "] ";
+
+    item.appendChild(label);
+    item.appendChild(document.createTextNode(message));
+
+    activity.prepend(item);
+
+    while (activity.children.length > 12) {
+        activity.lastElementChild.remove();
+    }
+}
+
+
+/* CHAT SYSTEM */
+
+const messages = document.getElementById("messages");
+const input = document.getElementById("userInput");
+
 function addMessage(text, type) {
     const div = document.createElement("div");
+
     div.className = "message " + type;
     div.textContent = text;
 
@@ -475,21 +754,24 @@ function addMessage(text, type) {
 function speak(text) {
     if (!("speechSynthesis" in window)) return;
 
-    window.speechSynthesis.cancel();
+    speechSynthesis.cancel();
 
     const speech = new SpeechSynthesisUtterance(text);
+
     speech.rate = 1;
     speech.pitch = 1.05;
 
     speech.onstart = () => {
-        status.textContent = "SPEAKING";
+        document.getElementById("coreStatus").textContent = "SPEAKING";
+        logActivity("Voice output started.");
     };
 
     speech.onend = () => {
-        status.textContent = "SYSTEM ONLINE";
+        document.getElementById("coreStatus").textContent =
+            "ALL SYSTEMS OPERATIONAL";
     };
 
-    window.speechSynthesis.speak(speech);
+    speechSynthesis.speak(speech);
 }
 
 function respond(command) {
@@ -497,7 +779,7 @@ function respond(command) {
     let answer;
 
     if (text.includes("hello") || text.includes("hi")) {
-        answer = "Hello! It is good to hear from you. How can I help?";
+        answer = "Hello! How can I assist you today?";
     }
 
     else if (text.includes("your name") || text.includes("who are you")) {
@@ -521,14 +803,17 @@ function respond(command) {
     }
 
     else if (text.includes("help")) {
-        answer = "You can ask me about the time, date, or my identity. More capabilities are coming soon.";
+        answer = "You can ask me about my identity, the current time, or today's date. More capabilities are under development.";
     }
 
     else {
-        answer = "I received your command. My intelligence module is still under development.";
+        answer = "Command received. My advanced intelligence module is still under development.";
     }
 
     addMessage(answer, "bot");
+
+    logActivity("Response generated.");
+
     speak(answer);
 }
 
@@ -538,70 +823,86 @@ function sendMessage() {
     if (!command) return;
 
     addMessage(command, "user");
+
     input.value = "";
 
-    status.textContent = "THINKING";
+    document.getElementById("coreStatus").textContent = "PROCESSING";
+    logActivity("Command received.");
 
     setTimeout(() => {
         respond(command);
-    }, 500);
+        document.getElementById("coreStatus").textContent =
+            "ALL SYSTEMS OPERATIONAL";
+    }, 400);
 }
 
-document.getElementById("sendBtn").addEventListener("click", sendMessage);
+document.getElementById("sendBtn").onclick = sendMessage;
 
-input.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
+input.addEventListener("keydown", event => {
+    if (event.key === "Enter") sendMessage();
 });
 
-/* VOICE INPUT */
+
+/* VOICE RECOGNITION */
 
 const SpeechRecognition =
     window.SpeechRecognition ||
     window.webkitSpeechRecognition;
 
+const voiceBtn = document.getElementById("voiceBtn");
+
 let recognition = null;
 let listening = false;
 
 if (SpeechRecognition) {
+
     recognition = new SpeechRecognition();
+
     recognition.lang = "en-US";
     recognition.continuous = false;
-    recognition.interimResults = false;
 
     recognition.onstart = () => {
         listening = true;
+
         voiceBtn.classList.add("active");
-        status.textContent = "LISTENING";
+
+        document.getElementById("coreStatus").textContent =
+            "LISTENING";
+
+        document.getElementById("voiceStatus").textContent =
+            "LISTENING";
+
+        logActivity("Voice recognition started.");
     };
 
-    recognition.onresult = (event) => {
-        const transcript =
-            event.results[0][0].transcript;
-
-        input.value = transcript;
+    recognition.onresult = event => {
+        input.value = event.results[0][0].transcript;
         sendMessage();
+    };
+
+    recognition.onerror = () => {
+        logActivity("Voice recognition error.");
     };
 
     recognition.onend = () => {
         listening = false;
+
         voiceBtn.classList.remove("active");
 
-        if (status.textContent === "LISTENING") {
-            status.textContent = "SYSTEM ONLINE";
-        }
+        document.getElementById("voiceStatus").textContent =
+            "STANDBY";
+
+        document.getElementById("coreStatus").textContent =
+            "ALL SYSTEMS OPERATIONAL";
     };
 
-    recognition.onerror = () => {
-        status.textContent = "VOICE UNAVAILABLE";
-    };
 }
 
-voiceBtn.addEventListener("click", () => {
+voiceBtn.onclick = () => {
+
     if (!recognition) {
         addMessage(
-            "Voice recognition is not supported in this browser. Please try another browser.",
+            "Voice recognition is not supported by this browser.",
             "bot"
         );
         return;
@@ -613,13 +914,13 @@ voiceBtn.addEventListener("click", () => {
         try {
             recognition.start();
         } catch (error) {
-            addMessage(
-                "Voice activation is currently unavailable. Please try again.",
-                "bot"
-            );
+            logActivity("Unable to start voice recognition.");
         }
     }
-});
+};
+
+logActivity("Command centre ready.");
+
 </script>
 
 </body>
