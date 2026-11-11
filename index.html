@@ -1,1 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050b16">
 
+<title>A.R.I.A. | AI Assistant</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cyan: #00d9ff;
+    --blue: #087cff;
+    --background: #050b16;
+    --panel: rgba(12, 28, 48, 0.72);
+    --border: rgba(0, 217, 255, 0.2);
+    --text: #e8f8ff;
+    --muted: #7693a9;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at 50% 35%, #102b48 0%, transparent 55%),
+        var(--background);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.18;
+    background-image:
+        linear-gradient(rgba(0,217,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,217,255,.08) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.container {
+    width: min(1100px, 94%);
+    margin: auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* HEADER */
+
+header {
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 23px;
+    letter-spacing: 4px;
+    color: var(--cyan);
+    text-shadow: 0 0 15px rgba(0,217,255,.6);
+}
+
+.logo span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.status {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #45f5b4;
+}
+
+.status::before {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: #45f5b4;
+    border-radius: 50%;
+    margin-right: 8px;
+    box-shadow: 0 0 10px #45f5b4;
+}
+
+/* MAIN */
+
+.hero {
+    text-align: center;
+    padding: 30px 0 15px;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+}
+
+.hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(24px, 5vw, 38px);
+    margin-top: 12px;
+    letter-spacing: 5px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+/* AI CORE */
+
+.core-area {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.core {
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, #0c5e92 0%, #06304f 42%, #041322 72%);
+    box-shadow:
+        0 0 35px rgba(0,217,255,.5),
+        inset 0 0 35px rgba(0,217,255,.5);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.core::before,
+.core::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid var(--cyan);
+}
+
+.core::before {
+    inset: -15px;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    animation: rotate 8s linear infinite;
+}
+
+.core::after {
+    inset: -28px;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-color: rgba(0,217,255,.4);
+    animation: rotate 12s linear infinite reverse;
+}
+
+.core-inner {
+    width: 115px;
+    height: 115px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,217,255,.7);
+    background: radial-gradient(circle, #1597cf, #06304f 70%);
+    box-shadow: 0 0 30px rgba(0,217,255,.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.core-inner span {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 25px;
+    color: white;
+    text-shadow: 0 0 15px white;
+    letter-spacing: 3px;
+}
+
+@keyframes rotate {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+/* PANELS */
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 25px rgba(0,0,0,.2);
+}
+
+.panel-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--cyan);
+    margin-bottom: 15px;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+}
+
+.info {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.value {
+    font-size: 14px;
+    margin-top: 8px;
+    color: white;
+}
+
+/* CHAT */
+
+.chat-panel {
+    margin-top: 18px;
+}
+
+.messages {
+    height: 190px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 5px 0 15px;
+}
+
+.message {
+    max-width: 85%;
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.bot {
+    align-self: flex-start;
+    background: rgba(0,217,255,.08);
+    border-left: 2px solid var(--cyan);
+}
+
+.user {
+    align-self: flex-end;
+    background: rgba(8,124,255,.2);
+    border-right: 2px solid var(--blue);
+}
+
+.input-area {
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+}
+
+input {
+    flex: 1;
+    min-width: 0;
+    background: rgba(0,0,0,.3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px;
+    color: white;
+    outline: none;
+    font-size: 12px;
+}
+
+input:focus {
+    border-color: var(--cyan);
+}
+
+button {
+    border: 1px solid var(--border);
+    background: rgba(0,217,255,.12);
+    color: var(--cyan);
+    border-radius: 8px;
+    padding: 0 15px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: .2s;
+}
+
+button:active {
+    transform: scale(.95);
+}
+
+.send {
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
+}
+
+.voice {
+    width: 48px;
+    font-size: 18px;
+}
+
+.voice.active {
+    background: rgba(255,70,90,.2);
+    border-color: #ff5269;
+    color: #ff5269;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 25px 0;
+    color: #536e83;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+@media(max-width:600px) {
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .core-area {
+        height: 270px;
+    }
+
+    .core {
+        width: 145px;
+        height: 145px;
+    }
+
+    .core-inner {
+        width: 95px;
+        height: 95px;
+    }
+
+    .hero {
+        padding-top: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <div class="logo">
+        A.R.I.A.
+        <span>ATHUL'S RESPONSIVE INTELLIGENT ASSISTANT</span>
+    </div>
+    <div class="status" id="systemStatus">SYSTEM ONLINE</div>
+</header>
+
+<section class="hero">
+    <div class="eyebrow">ARTIFICIAL INTELLIGENCE SYSTEM</div>
+    <h1>HOW CAN I HELP?</h1>
+    <p class="subtitle">Your personal intelligent assistant</p>
+</section>
+
+<section class="core-area">
+    <div class="core">
+        <div class="core-inner">
+            <span>A.R.I.A.</span>
+        </div>
+    </div>
+</section>
+
+<section class="dashboard">
+
+    <div class="panel">
+        <div class="panel-title">SYSTEM</div>
+        <div class="info">STATUS</div>
+        <div class="value">Operational</div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">TIME</div>
+        <div class="info">LOCAL TIME</div>
+        <div class="value" id="clock">--:--:--</div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">DATE</div>
+        <div class="info">TODAY</div>
+        <div class="value" id="date">Loading...</div>
+    </div>
+
+</section>
+
+<section class="panel chat-panel">
+
+    <div class="panel-title">A.R.I.A. COMMUNICATION INTERFACE</div>
+
+    <div class="messages" id="messages">
+        <div class="message bot">
+            Hello! I am A.R.I.A. Your system is online. How may I assist you?
+        </div>
+    </div>
+
+    <div class="input-area">
+        <button class="voice" id="voiceBtn" title="Voice input">🎙️</button>
+        <input
+            type="text"
+            id="userInput"
+            placeholder="Enter your command..."
+            autocomplete="off"
+        >
+        <button class="send" id="sendBtn">SEND</button>
+    </div>
+
+</section>
+
+<footer>
+    A.R.I.A. SYSTEMS © 2026 | ALL SYSTEMS OPERATIONAL
+</footer>
+
+</div>
+
+<script>
+const messages = document.getElementById("messages");
+const input = document.getElementById("userInput");
+const status = document.getElementById("systemStatus");
+const voiceBtn = document.getElementById("voiceBtn");
+
+function updateClock() {
+    const now = new Date();
+
+    document.getElementById("clock").textContent =
+        now.toLocaleTimeString();
+
+    document.getElementById("date").textContent =
+        now.toLocaleDateString();
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+function addMessage(text, type) {
+    const div = document.createElement("div");
+    div.className = "message " + type;
+    div.textContent = text;
+
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function speak(text) {
+    if (!("speechSynthesis" in window)) return;
+
+    window.speechSynthesis.cancel();
+
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.rate = 1;
+    speech.pitch = 1.05;
+
+    speech.onstart = () => {
+        status.textContent = "SPEAKING";
+    };
+
+    speech.onend = () => {
+        status.textContent = "SYSTEM ONLINE";
+    };
+
+    window.speechSynthesis.speak(speech);
+}
+
+function respond(command) {
+    const text = command.toLowerCase();
+    let answer;
+
+    if (text.includes("hello") || text.includes("hi")) {
+        answer = "Hello! It is good to hear from you. How can I help?";
+    }
+
+    else if (text.includes("your name") || text.includes("who are you")) {
+        answer = "I am A.R.I.A., Athul's Responsive Intelligent Assistant.";
+    }
+
+    else if (text.includes("time")) {
+        answer = "The current time is " + new Date().toLocaleTimeString();
+    }
+
+    else if (text.includes("date") || text.includes("today")) {
+        answer = "Today's date is " + new Date().toLocaleDateString();
+    }
+
+    else if (text.includes("how are you")) {
+        answer = "All systems are operational. I am ready to assist you.";
+    }
+
+    else if (text.includes("thank")) {
+        answer = "You're welcome. Always happy to assist.";
+    }
+
+    else if (text.includes("help")) {
+        answer = "You can ask me about the time, date, or my identity. More capabilities are coming soon.";
+    }
+
+    else {
+        answer = "I received your command. My intelligence module is still under development.";
+    }
+
+    addMessage(answer, "bot");
+    speak(answer);
+}
+
+function sendMessage() {
+    const command = input.value.trim();
+
+    if (!command) return;
+
+    addMessage(command, "user");
+    input.value = "";
+
+    status.textContent = "THINKING";
+
+    setTimeout(() => {
+        respond(command);
+    }, 500);
+}
+
+document.getElementById("sendBtn").addEventListener("click", sendMessage);
+
+input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
+
+/* VOICE INPUT */
+
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+let recognition = null;
+let listening = false;
+
+if (SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+        listening = true;
+        voiceBtn.classList.add("active");
+        status.textContent = "LISTENING";
+    };
+
+    recognition.onresult = (event) => {
+        const transcript =
+            event.results[0][0].transcript;
+
+        input.value = transcript;
+        sendMessage();
+    };
+
+    recognition.onend = () => {
+        listening = false;
+        voiceBtn.classList.remove("active");
+
+        if (status.textContent === "LISTENING") {
+            status.textContent = "SYSTEM ONLINE";
+        }
+    };
+
+    recognition.onerror = () => {
+        status.textContent = "VOICE UNAVAILABLE";
+    };
+}
+
+voiceBtn.addEventListener("click", () => {
+    if (!recognition) {
+        addMessage(
+            "Voice recognition is not supported in this browser. Please try another browser.",
+            "bot"
+        );
+        return;
+    }
+
+    if (listening) {
+        recognition.stop();
+    } else {
+        try {
+            recognition.start();
+        } catch (error) {
+            addMessage(
+                "Voice activation is currently unavailable. Please try again.",
+                "bot"
+            );
+        }
+    }
+});
+</script>
+
+</body>
+</html>
