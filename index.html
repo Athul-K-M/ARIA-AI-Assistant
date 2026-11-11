@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050b12">
+<meta name="theme-color" content="#030812">
 
-<title>A.R.I.A. 2.0 | Command Centre</title>
+<title>A.R.I.A. 2.1 | Intelligent Command Centre</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
@@ -13,9 +13,9 @@
 :root {
     --cyan: #00e5ff;
     --blue: #087cff;
-    --bg: #050b12;
-    --panel: rgba(8,22,36,.88);
-    --border: rgba(0,229,255,.19);
+    --bg: #030812;
+    --panel: rgba(8,22,38,.88);
+    --border: rgba(0,229,255,.22);
     --muted: #718b9e;
     --white: #e8faff;
 }
@@ -27,11 +27,11 @@
 }
 
 body {
-    background:
-        radial-gradient(ellipse at center, #10263b 0%, #050b12 65%);
-    color: var(--white);
-    font-family: Inter, sans-serif;
     min-height: 100vh;
+    background:
+        radial-gradient(ellipse at 50% 40%, #10263e 0%, #050b15 55%, #02050b 100%);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
     overflow-x: hidden;
 }
 
@@ -40,15 +40,16 @@ body::before {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: .17;
+    opacity: .15;
     background-image:
-        linear-gradient(rgba(0,229,255,.12) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,229,255,.12) 1px,transparent 1px);
-    background-size: 35px 35px;
+        linear-gradient(rgba(0,229,255,.12) 1px, transparent 1px),
+        linear-gradient(90deg,rgba(0,229,255,.12) 1px, transparent 1px);
+    background-size: 36px 36px;
+    z-index: 0;
 }
 
 .app {
-    max-width: 1500px;
+    max-width: 1550px;
     margin: auto;
     padding: 20px;
     position: relative;
@@ -61,13 +62,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
     border-bottom: 1px solid var(--border);
     padding: 15px 5px 22px;
-    gap: 15px;
 }
 
 .logo {
-    font: 700 25px Orbitron;
+    font: 700 25px 'Orbitron', sans-serif;
     letter-spacing: 4px;
     color: var(--cyan);
     text-shadow: 0 0 15px #00e5ff66;
@@ -75,7 +76,7 @@ header {
 
 .logo small {
     display: block;
-    font: 9px Inter;
+    font: 9px 'Inter', sans-serif;
     letter-spacing: 3px;
     color: var(--muted);
     margin-top: 7px;
@@ -109,18 +110,30 @@ header {
 }
 
 .panel {
+    position: relative;
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 19px;
     backdrop-filter: blur(12px);
     box-shadow: 0 5px 30px #0005;
     min-width: 0;
 }
 
+.panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 35px;
+    height: 2px;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+}
+
 .panel-title {
     color: var(--cyan);
-    font: 10px Orbitron;
+    font: 10px 'Orbitron', sans-serif;
     letter-spacing: 2px;
     margin-bottom: 19px;
 }
@@ -132,7 +145,7 @@ header {
 }
 
 .value {
-    font: 13px Orbitron;
+    font: 13px 'Orbitron', sans-serif;
     margin-top: 8px;
     overflow-wrap: anywhere;
 }
@@ -159,125 +172,263 @@ header {
     text-align: right;
 }
 
-/* CENTRAL CORE */
+/* CENTRAL SECTION */
 
 .core-section {
     text-align: center;
-    padding: 10px 0 20px;
+    padding: 22px 10px;
+    overflow: hidden;
 }
 
 .core-section h1 {
-    font: 17px Orbitron;
+    font: 17px 'Orbitron', sans-serif;
     letter-spacing: 3px;
-    margin-bottom: 8px;
 }
 
-.core-section p {
+.core-section > p {
     color: var(--muted);
     font-size: 11px;
+    margin-top: 10px;
 }
+
+/* HOLOGRAPHIC REACTOR */
 
 .core-wrapper {
-    height: 320px;
+    width: 100%;
+    min-height: 390px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    perspective: 900px;
 }
 
-.core {
-    height: 175px;
-    width: 175px;
+.reactor {
+    width: min(310px, 78vw);
+    aspect-ratio: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-    background:
-        radial-gradient(circle at 35% 30%,
-        #9afaff 0%, #168dc4 15%,
-        #063653 48%, #020b16 75%);
-
-    box-shadow:
-        0 0 25px #00dfff88,
-        0 0 70px #008cff55,
-        inset 0 0 35px #00dfff77;
-
-    animation: breathe 3s infinite ease-in-out;
+    filter: drop-shadow(0 0 20px #00cfff30);
 }
 
-.core::before {
-    content: "";
+/* MAIN ENERGY GLOW */
+
+.reactor-glow {
     position: absolute;
-    inset: -18px;
-    border: 2px solid var(--cyan);
+    inset: 18%;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle,
+        #b9ffff 0%,
+        #39cfff 4%,
+        #087cff 17%,
+        #05345b 43%,
+        transparent 72%);
+    box-shadow:
+        0 0 25px #00cfff88,
+        0 0 65px #087cff66,
+        inset 0 0 30px #00e5ff77;
+    animation: energyPulse 3s ease-in-out infinite;
+}
+
+/* ROTATING RINGS */
+
+.reactor-ring {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.ring-1 {
+    inset: 1%;
+    border: 2px solid transparent;
+    border-top-color: #8df7ff;
+    border-bottom-color: #087cff;
+    box-shadow: 0 0 15px #00dfff88;
+    animation: spin 8s linear infinite;
+}
+
+.ring-2 {
+    inset: 6%;
+    border: 2px dashed #00dfff88;
+    animation: spinReverse 18s linear infinite;
+}
+
+.ring-3 {
+    inset: 13%;
+    border: 1px solid #00e5ff99;
     border-left-color: transparent;
     border-right-color: transparent;
-    border-radius: 50%;
-    animation: rotate 7s linear infinite;
+    box-shadow: 0 0 12px #00dfff44;
+    animation: spin 12s linear infinite;
 }
 
-.core::after {
-    content: "";
+.ring-4 {
+    inset: 19%;
+    border: 3px solid transparent;
+    border-top-color: #6af5ff;
+    border-bottom-color: #087cff;
+    border-left-color: #00aaff66;
+    box-shadow: 0 0 12px #00dfff88;
+    animation: spinReverse 6s linear infinite;
+}
+
+.ring-5 {
+    inset: 26%;
+    border: 1px solid #00dfff77;
+    animation: spin 20s linear infinite;
+}
+
+/* DIGITAL TICKS */
+
+.reactor-ticks {
     position: absolute;
-    inset: -35px;
-    border: 1px solid #00e5ff66;
-    border-top-color: transparent;
-    border-bottom-color: transparent;
+    inset: 9%;
     border-radius: 50%;
-    animation: rotate 11s linear infinite reverse;
+    background: repeating-conic-gradient(
+        from 0deg,
+        #00e5ff 0deg 1deg,
+        transparent 1deg 7deg
+    );
+    mask-image: radial-gradient(
+        circle,
+        transparent 68%,
+        black 69%,
+        black 72%,
+        transparent 73%
+    );
+    -webkit-mask-image: radial-gradient(
+        circle,
+        transparent 68%,
+        black 69%,
+        black 72%,
+        transparent 73%
+    );
+    animation: spinReverse 35s linear infinite;
 }
 
-.core-name {
-    font: 600 23px Orbitron;
+/* MOVING ENERGY PARTICLES */
+
+.reactor-particle {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: #d7ffff;
+    border-radius: 50%;
+    box-shadow:
+        0 0 8px #00e5ff,
+        0 0 18px #00e5ff;
+}
+
+.particle-1 {
+    top: 9%;
+    left: 48%;
+}
+
+.particle-2 {
+    bottom: 13%;
+    right: 12%;
+}
+
+.particle-3 {
+    top: 48%;
+    left: 5%;
+    width: 5px;
+    height: 5px;
+}
+
+/* CENTRAL CORE */
+
+.reactor-center {
+    position: absolute;
+    inset: 31%;
+    border-radius: 50%;
+    border: 2px solid #7af5ff;
+    background:
+        radial-gradient(circle at 35% 25%,
+        #42dfff,
+        #07518b 42%,
+        #03172c 85%);
+    box-shadow:
+        0 0 15px #00e5ff,
+        0 0 35px #087cff99,
+        inset 0 0 25px #00dfff88;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.reactor-symbol {
+    font: 600 clamp(16px, 4vw, 22px) 'Orbitron', sans-serif;
     letter-spacing: 2px;
-    text-shadow: 0 0 15px white;
+    color: white;
+    text-shadow:
+        0 0 8px white,
+        0 0 20px #00e5ff;
 }
 
-.orbit {
-    position: absolute;
-    width: 245px;
-    height: 245px;
-    border: 1px dashed #00e5ff55;
-    border-radius: 50%;
-    animation: rotate 25s linear infinite;
+.reactor-label {
+    font: 8px 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+    color: #a9faff;
+    margin-top: 10px;
 }
 
-.orbit::before,
-.orbit::after {
-    content: "";
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: var(--cyan);
-    border-radius: 50%;
-    box-shadow: 0 0 15px var(--cyan);
-}
+/* ANIMATIONS */
 
-.orbit::before {
-    top: 20px;
-    left: 35px;
-}
-
-.orbit::after {
-    bottom: 30px;
-    right: 20px;
-}
-
-@keyframes rotate {
+@keyframes spin {
     to { transform: rotate(360deg); }
 }
 
-@keyframes breathe {
+@keyframes spinReverse {
+    to { transform: rotate(-360deg); }
+}
+
+@keyframes energyPulse {
+    0%,100% {
+        transform: scale(.95);
+        opacity: .8;
+    }
     50% {
-        transform: scale(1.06);
-        box-shadow: 0 0 45px #00dfffaa,
-                    0 0 90px #008cff66;
+        transform: scale(1.08);
+        opacity: 1;
     }
 }
 
-/* ACTIVITY */
+/* REACTOR STATES */
+
+.reactor.listening .reactor-glow {
+    animation: listeningPulse .7s infinite alternate;
+}
+
+.reactor.thinking .reactor-ring {
+    animation-duration: 2s;
+}
+
+.reactor.speaking .reactor-glow {
+    animation: speakingPulse .45s infinite alternate;
+}
+
+@keyframes listeningPulse {
+    to {
+        transform: scale(1.15);
+        filter: hue-rotate(20deg);
+    }
+}
+
+@keyframes speakingPulse {
+    to {
+        transform: scale(1.12);
+        opacity: .65;
+    }
+}
+
+/* ACTIVITY LOG */
 
 .activity {
     height: 180px;
@@ -290,6 +441,7 @@ header {
     padding: 10px 0;
     border-bottom: 1px solid #ffffff0b;
     line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .activity span {
@@ -363,6 +515,10 @@ button {
     cursor: pointer;
 }
 
+button:active {
+    transform: scale(.96);
+}
+
 .send {
     background: #087cff;
     color: white;
@@ -375,9 +531,8 @@ button {
 .voice.active {
     background: #ff354522;
     border-color: #ff3545;
+    color: #ff5269;
 }
-
-/* FOOTER */
 
 footer {
     text-align: center;
@@ -387,11 +542,11 @@ footer {
     padding: 25px 0 10px;
 }
 
-/* MOBILE */
+/* TABLET */
 
 @media(max-width:850px) {
     .dashboard {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1.4fr;
     }
 
     .centre-column {
@@ -400,9 +555,15 @@ footer {
     }
 }
 
+/* MOBILE */
+
 @media(max-width:520px) {
     .app {
         padding: 12px;
+    }
+
+    header {
+        padding-bottom: 16px;
     }
 
     .logo {
@@ -424,24 +585,44 @@ footer {
 
     .centre-column {
         grid-column: auto;
+        grid-row: auto;
+    }
+
+    .core-section {
+        padding: 22px 5px;
+    }
+
+    .core-section h1 {
+        font-size: 14px;
     }
 
     .core-wrapper {
-        height: 280px;
+        min-height: 330px;
     }
 
-    .core {
-        width: 150px;
-        height: 150px;
-    }
-
-    .orbit {
-        width: 220px;
-        height: 220px;
+    .reactor {
+        width: min(285px, 82vw);
     }
 
     .panel {
         padding: 16px;
+    }
+
+    .activity {
+        height: 150px;
+    }
+
+    .messages {
+        height: 165px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
     }
 }
 </style>
@@ -452,6 +633,7 @@ footer {
 <div class="app">
 
 <header>
+
     <div class="logo">
         A.R.I.A.
         <small>INTELLIGENT COMMAND CENTRE</small>
@@ -462,6 +644,7 @@ footer {
         <div id="clock">--:--:--</div>
         <div id="date">Loading...</div>
     </div>
+
 </header>
 
 <main class="dashboard">
@@ -541,14 +724,39 @@ footer {
     <section class="panel core-section">
 
         <h1>ARTIFICIAL INTELLIGENCE</h1>
+
         <p>Your personal intelligent assistant</p>
 
         <div class="core-wrapper">
-            <div class="orbit"></div>
 
-            <div class="core">
-                <div class="core-name">A.R.I.A.</div>
+            <div class="reactor" id="reactor">
+
+                <div class="reactor-glow"></div>
+
+                <div class="reactor-ring ring-1"></div>
+                <div class="reactor-ring ring-2"></div>
+                <div class="reactor-ring ring-3"></div>
+                <div class="reactor-ring ring-4"></div>
+                <div class="reactor-ring ring-5"></div>
+
+                <div class="reactor-ticks"></div>
+
+                <div class="reactor-particle particle-1"></div>
+                <div class="reactor-particle particle-2"></div>
+                <div class="reactor-particle particle-3"></div>
+
+                <div class="reactor-center">
+
+                    <div class="reactor-symbol">A.R.I.A.</div>
+
+                    <div class="reactor-label" id="reactorLabel">
+                        CORE ACTIVE
+                    </div>
+
+                </div>
+
             </div>
+
         </div>
 
         <div class="label" id="coreStatus">
@@ -558,12 +766,19 @@ footer {
     </section>
 
     <section class="panel">
+
         <div class="panel-title">SYSTEM ACTIVITY</div>
+
         <div class="activity" id="activity">
+
             <div><span>[SYSTEM]</span> Interface initialized.</div>
-            <div><span>[CORE]</span> AI core active.</div>
+
+            <div><span>[CORE]</span> Holographic reactor active.</div>
+
             <div><span>[READY]</span> Awaiting commands.</div>
+
         </div>
+
     </section>
 
 </div>
@@ -573,6 +788,7 @@ footer {
 <div class="column">
 
     <section class="panel">
+
         <div class="panel-title">ENVIRONMENT</div>
 
         <div class="data-row">
@@ -589,9 +805,11 @@ footer {
             <span>Local Time</span>
             <span>Enabled</span>
         </div>
+
     </section>
 
     <section class="panel">
+
         <div class="panel-title">CORE STATUS</div>
 
         <div class="data-row">
@@ -608,13 +826,15 @@ footer {
             <span>AI Intelligence</span>
             <span>PENDING</span>
         </div>
+
     </section>
 
     <section class="panel">
+
         <div class="panel-title">ASSISTANT INFORMATION</div>
 
         <div class="label">PROJECT NAME</div>
-        <div class="value">A.R.I.A. 2.0</div>
+        <div class="value">A.R.I.A. 2.1</div>
 
         <br>
 
@@ -624,41 +844,51 @@ footer {
         <br>
 
         <div class="label">SYSTEM VERSION</div>
-        <div class="value">2.0.0</div>
+        <div class="value">2.1.0</div>
+
     </section>
 
 </div>
 
 </main>
 
-<!-- CHAT -->
+<!-- COMMAND INTERFACE -->
 
 <section class="panel chat-panel">
 
     <div class="panel-title">COMMAND INTERFACE</div>
 
     <div class="messages" id="messages">
+
         <div class="message bot">
-            Hello! I am A.R.I.A. My command centre is online. How may I assist you?
+            Hello! I am A.R.I.A. 2.1. My holographic reactor is online. How may I assist you?
         </div>
+
     </div>
 
     <div class="input-area">
-        <button class="voice" id="voiceBtn">🎙️</button>
+
+        <button class="voice" id="voiceBtn" aria-label="Voice input">
+            🎙️
+        </button>
 
         <input
             type="text"
             id="userInput"
             placeholder="Enter your command..."
+            autocomplete="off"
         >
 
-        <button class="send" id="sendBtn">SEND</button>
+        <button class="send" id="sendBtn">
+            SEND
+        </button>
+
     </div>
 
 </section>
 
 <footer>
-    A.R.I.A. 2.0 | INTELLIGENT COMMAND CENTRE | 2026
+    A.R.I.A. 2.1 | INTELLIGENT COMMAND CENTRE | 2026
 </footer>
 
 </div>
@@ -668,6 +898,7 @@ footer {
 /* CLOCK */
 
 function updateClock() {
+
     const now = new Date();
 
     document.getElementById("clock").textContent =
@@ -675,6 +906,7 @@ function updateClock() {
 
     document.getElementById("date").textContent =
         now.toLocaleDateString();
+
 }
 
 setInterval(updateClock, 1000);
@@ -703,9 +935,14 @@ document.getElementById("screenSize").textContent =
 document.getElementById("language").textContent =
     navigator.language;
 
+
+/* CONNECTION */
+
 function updateConnection() {
+
     document.getElementById("connection").textContent =
         navigator.onLine ? "ONLINE" : "OFFLINE";
+
 }
 
 updateConnection();
@@ -714,45 +951,102 @@ window.addEventListener("online", updateConnection);
 window.addEventListener("offline", updateConnection);
 
 
+/* REACTOR STATES */
+
+const reactor = document.getElementById("reactor");
+
+function setReactorState(state) {
+
+    reactor.classList.remove(
+        "listening",
+        "thinking",
+        "speaking"
+    );
+
+    if (state !== "idle") {
+        reactor.classList.add(state);
+    }
+
+    const labels = {
+        idle: "CORE ACTIVE",
+        listening: "LISTENING",
+        thinking: "PROCESSING",
+        speaking: "SPEAKING"
+    };
+
+    document.getElementById("reactorLabel").textContent =
+        labels[state] || "CORE ACTIVE";
+
+    const statusText = {
+        idle: "ALL SYSTEMS OPERATIONAL",
+        listening: "VOICE INPUT ACTIVE",
+        thinking: "PROCESSING COMMAND",
+        speaking: "VOICE OUTPUT ACTIVE"
+    };
+
+    document.getElementById("coreStatus").textContent =
+        statusText[state] || "CORE ACTIVE";
+
+}
+
+
 /* ACTIVITY LOG */
 
 function logActivity(message) {
+
     const activity = document.getElementById("activity");
+
     const item = document.createElement("div");
 
     const time = new Date().toLocaleTimeString();
 
     const label = document.createElement("span");
+
     label.textContent = "[" + time + "] ";
 
     item.appendChild(label);
-    item.appendChild(document.createTextNode(message));
+
+    item.appendChild(
+        document.createTextNode(message)
+    );
 
     activity.prepend(item);
 
     while (activity.children.length > 12) {
         activity.lastElementChild.remove();
     }
+
 }
 
 
-/* CHAT SYSTEM */
+/* CHAT */
 
 const messages = document.getElementById("messages");
+
 const input = document.getElementById("userInput");
 
 function addMessage(text, type) {
+
     const div = document.createElement("div");
 
     div.className = "message " + type;
+
     div.textContent = text;
 
     messages.appendChild(div);
+
     messages.scrollTop = messages.scrollHeight;
+
 }
 
+
+/* SPEECH */
+
 function speak(text) {
-    if (!("speechSynthesis" in window)) return;
+
+    if (!("speechSynthesis" in window)) {
+        return;
+    }
 
     speechSynthesis.cancel();
 
@@ -762,52 +1056,102 @@ function speak(text) {
     speech.pitch = 1.05;
 
     speech.onstart = () => {
-        document.getElementById("coreStatus").textContent = "SPEAKING";
+
+        setReactorState("speaking");
+
         logActivity("Voice output started.");
+
     };
 
     speech.onend = () => {
-        document.getElementById("coreStatus").textContent =
-            "ALL SYSTEMS OPERATIONAL";
+
+        setReactorState("idle");
+
+    };
+
+    speech.onerror = () => {
+
+        setReactorState("idle");
+
     };
 
     speechSynthesis.speak(speech);
+
 }
 
+
+/* BASIC COMMAND ENGINE */
+
 function respond(command) {
+
     const text = command.toLowerCase();
+
     let answer;
 
-    if (text.includes("hello") || text.includes("hi")) {
+    if (
+        text.includes("hello") ||
+        text.includes("hi")
+    ) {
+
         answer = "Hello! How can I assist you today?";
+
     }
 
-    else if (text.includes("your name") || text.includes("who are you")) {
-        answer = "I am A.R.I.A., Athul's Responsive Intelligent Assistant.";
+    else if (
+        text.includes("your name") ||
+        text.includes("who are you")
+    ) {
+
+        answer =
+            "I am A.R.I.A., Athul's Responsive Intelligent Assistant.";
+
     }
 
     else if (text.includes("time")) {
-        answer = "The current time is " + new Date().toLocaleTimeString();
+
+        answer =
+            "The current time is " +
+            new Date().toLocaleTimeString();
+
     }
 
-    else if (text.includes("date") || text.includes("today")) {
-        answer = "Today's date is " + new Date().toLocaleDateString();
+    else if (
+        text.includes("date") ||
+        text.includes("today")
+    ) {
+
+        answer =
+            "Today's date is " +
+            new Date().toLocaleDateString();
+
     }
 
     else if (text.includes("how are you")) {
-        answer = "All systems are operational. I am ready to assist you.";
+
+        answer =
+            "All systems are operational. I am ready to assist you.";
+
     }
 
     else if (text.includes("thank")) {
-        answer = "You're welcome. Always happy to assist.";
+
+        answer =
+            "You're welcome. Always happy to assist.";
+
     }
 
     else if (text.includes("help")) {
-        answer = "You can ask me about my identity, the current time, or today's date. More capabilities are under development.";
+
+        answer =
+            "You can ask me about my identity, the current time, or today's date. More capabilities are under development.";
+
     }
 
     else {
-        answer = "Command received. My advanced intelligence module is still under development.";
+
+        answer =
+            "Command received. My advanced intelligence module is still under development.";
+
     }
 
     addMessage(answer, "bot");
@@ -815,9 +1159,14 @@ function respond(command) {
     logActivity("Response generated.");
 
     speak(answer);
+
 }
 
+
+/* SEND COMMAND */
+
 function sendMessage() {
+
     const command = input.value.trim();
 
     if (!command) return;
@@ -826,20 +1175,37 @@ function sendMessage() {
 
     input.value = "";
 
-    document.getElementById("coreStatus").textContent = "PROCESSING";
+    setReactorState("thinking");
+
     logActivity("Command received.");
 
     setTimeout(() => {
+
         respond(command);
-        document.getElementById("coreStatus").textContent =
-            "ALL SYSTEMS OPERATIONAL";
+
+        if (
+            !("speechSynthesis" in window) ||
+            speechSynthesis.speaking === false
+        ) {
+            setReactorState("idle");
+        }
+
     }, 400);
+
 }
 
-document.getElementById("sendBtn").onclick = sendMessage;
+
+document.getElementById("sendBtn").addEventListener(
+    "click",
+    sendMessage
+);
 
 input.addEventListener("keydown", event => {
-    if (event.key === "Enter") sendMessage();
+
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+
 });
 
 
@@ -852,6 +1218,7 @@ const SpeechRecognition =
 const voiceBtn = document.getElementById("voiceBtn");
 
 let recognition = null;
+
 let listening = false;
 
 if (SpeechRecognition) {
@@ -859,32 +1226,45 @@ if (SpeechRecognition) {
     recognition = new SpeechRecognition();
 
     recognition.lang = "en-US";
+
     recognition.continuous = false;
 
+    recognition.interimResults = false;
+
     recognition.onstart = () => {
+
         listening = true;
 
         voiceBtn.classList.add("active");
 
-        document.getElementById("coreStatus").textContent =
-            "LISTENING";
+        setReactorState("listening");
 
         document.getElementById("voiceStatus").textContent =
             "LISTENING";
 
         logActivity("Voice recognition started.");
+
     };
 
     recognition.onresult = event => {
-        input.value = event.results[0][0].transcript;
+
+        input.value =
+            event.results[0][0].transcript;
+
         sendMessage();
+
     };
 
-    recognition.onerror = () => {
-        logActivity("Voice recognition error.");
+    recognition.onerror = event => {
+
+        logActivity(
+            "Voice recognition error: " + event.error
+        );
+
     };
 
     recognition.onend = () => {
+
         listening = false;
 
         voiceBtn.classList.remove("active");
@@ -892,32 +1272,56 @@ if (SpeechRecognition) {
         document.getElementById("voiceStatus").textContent =
             "STANDBY";
 
-        document.getElementById("coreStatus").textContent =
-            "ALL SYSTEMS OPERATIONAL";
+        if (!speechSynthesis?.speaking) {
+            setReactorState("idle");
+        }
+
     };
 
 }
 
-voiceBtn.onclick = () => {
+
+voiceBtn.addEventListener("click", () => {
 
     if (!recognition) {
+
         addMessage(
-            "Voice recognition is not supported by this browser.",
+            "Voice recognition is not supported in this browser.",
             "bot"
         );
+
         return;
+
     }
 
     if (listening) {
+
         recognition.stop();
+
     } else {
+
         try {
+
             recognition.start();
+
         } catch (error) {
-            logActivity("Unable to start voice recognition.");
+
+            logActivity(
+                "Unable to start voice recognition."
+            );
+
         }
+
     }
-};
+
+});
+
+
+/* INITIALIZATION */
+
+logActivity("A.R.I.A. 2.1 initialized.");
+
+logActivity("Holographic reactor activated.");
 
 logActivity("Command centre ready.");
 
