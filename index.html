@@ -3,627 +3,492 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#030812">
-
-<title>A.R.I.A. 2.1 | Intelligent Command Centre</title>
+<meta name="theme-color" content="#000000">
+<title>A.R.I.A. — Intelligent Assistant</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
 
 :root {
-    --cyan: #00e5ff;
-    --blue: #087cff;
-    --bg: #030812;
-    --panel: rgba(8,22,38,.88);
-    --border: rgba(0,229,255,.22);
-    --muted: #718b9e;
-    --white: #e8faff;
+ --bg:#000;
+ --ice:#D9F7FF;
+ --cyan:#72DFFF;
+ --blue:#168CFF;
+ --line:rgba(114,223,255,.24);
+ --panel:#05090e;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+ box-sizing:border-box;
+}
+
+html,body {
+ margin:0;
+ min-height:100%;
+ background:#000;
+ color:var(--ice);
 }
 
 body {
-    min-height: 100vh;
-    background:
-        radial-gradient(ellipse at 50% 40%, #10263e 0%, #050b15 55%, #02050b 100%);
-    color: var(--white);
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: .15;
-    background-image:
-        linear-gradient(rgba(0,229,255,.12) 1px, transparent 1px),
-        linear-gradient(90deg,rgba(0,229,255,.12) 1px, transparent 1px);
-    background-size: 36px 36px;
-    z-index: 0;
+ font-family:'Rajdhani',Arial,sans-serif;
+ overflow-x:hidden;
 }
 
 .app {
-    max-width: 1550px;
-    margin: auto;
-    padding: 20px;
-    position: relative;
-    z-index: 1;
+ width:min(1080px,100%);
+ margin:auto;
+ padding:20px 22px 32px;
 }
 
-/* HEADER */
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    border-bottom: 1px solid var(--border);
-    padding: 15px 5px 22px;
+.topbar {
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:12px;
+ border-bottom:1px solid var(--line);
+ padding:4px 2px 14px;
 }
 
-.logo {
-    font: 700 25px 'Orbitron', sans-serif;
-    letter-spacing: 4px;
-    color: var(--cyan);
-    text-shadow: 0 0 15px #00e5ff66;
+.brand {
+ font:600 18px Orbitron,sans-serif;
+ letter-spacing:4px;
+ color:var(--ice);
+ text-shadow:0 0 10px rgba(114,223,255,.3);
 }
 
-.logo small {
-    display: block;
-    font: 9px 'Inter', sans-serif;
-    letter-spacing: 3px;
-    color: var(--muted);
-    margin-top: 7px;
+.brand small {
+ display:block;
+ font:10px Rajdhani,sans-serif;
+ letter-spacing:2.5px;
+ color:#9CCBD9;
+ margin-top:5px;
 }
 
-.header-right {
-    text-align: right;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    line-height: 2;
+.top-status {
+ font:10px Orbitron,sans-serif;
+ letter-spacing:1.3px;
+ color:var(--ice);
+ text-align:right;
+ line-height:1.8;
 }
 
-.online {
-    color: #4cffb0;
+.status-dot {
+ display:inline-block;
+ width:7px;
+ height:7px;
+ border-radius:50%;
+ background:#62f6d4;
+ box-shadow:0 0 8px #62f6d4;
+ margin-right:7px;
 }
 
-/* DASHBOARD */
+.hero {
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ padding:19px 0 8px;
+}
+
+.hud-caption {
+ font:10px Orbitron,sans-serif;
+ letter-spacing:2.5px;
+ color:#9CCBD9;
+ margin-bottom:10px;
+ text-align:center;
+}
+
+.hud-wrap {
+ width:min(68vw,310px);
+ aspect-ratio:1;
+ position:relative;
+ display:grid;
+ place-items:center;
+ margin:0 auto 13px;
+}
+
+.hud-svg {
+ width:100%;
+ height:100%;
+ display:block;
+ overflow:visible;
+}
+
+.ring {
+ transform-origin:200px 200px;
+ fill:none;
+}
+
+.fixed-ring {
+ stroke:#5BCDF5;
+ stroke-width:1.5;
+ opacity:.72;
+}
+
+.dotted-ring {
+ stroke:#83E5FF;
+ stroke-width:2;
+ stroke-dasharray:1 7;
+ opacity:.8;
+}
+
+.segment-ring {
+ stroke:#9AEAFF;
+ stroke-width:5;
+ stroke-dasharray:18 11 4 11;
+ opacity:.9;
+}
+
+.inner-rotate {
+ animation:spin 52s linear infinite;
+}
+
+@keyframes spin {
+ to {
+  transform:rotate(360deg);
+ }
+}
+
+.core {
+ position:absolute;
+ width:43%;
+ height:43%;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+
+ background:radial-gradient(
+  circle at 50% 40%,
+  #071522 0,
+  #010509 68%,
+  #000 100%
+ );
+
+ border:1.5px solid rgba(217,247,255,.9);
+
+ box-shadow:
+ inset 0 0 15px rgba(70,180,220,.12),
+ 0 0 8px rgba(114,223,255,.75),
+ 0 0 22px rgba(22,140,255,.22);
+}
+
+.core:before {
+ content:"";
+ position:absolute;
+ inset:-7px;
+ border-radius:50%;
+ border:1px solid rgba(114,223,255,.35);
+}
+
+.core-name {
+ font:600 clamp(17px,4.6vw,23px) Orbitron,sans-serif;
+ letter-spacing:2px;
+ color:var(--ice);
+ text-shadow:0 0 9px rgba(114,223,255,.55);
+}
+
+.core-sub {
+ font:8px Orbitron,sans-serif;
+ letter-spacing:1.5px;
+ color:#A9DCEB;
+ margin-top:7px;
+}
+
+.core-state {
+ font:8px Orbitron,sans-serif;
+ letter-spacing:1.4px;
+ color:var(--ice);
+ margin-top:10px;
+}
+
+.hud-wrap.listening .core {
+ box-shadow:
+ inset 0 0 18px rgba(114,223,255,.2),
+ 0 0 13px rgba(114,223,255,.9);
+}
+
+.hud-wrap.thinking .core,
+.hud-wrap.speaking .core {
+ animation:pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+ to {
+  box-shadow:
+  inset 0 0 22px rgba(114,223,255,.25),
+  0 0 17px rgba(114,223,255,.9);
+ }
+}
+
+.hero-title {
+ font:600 11px Orbitron,sans-serif;
+ letter-spacing:2.4px;
+ color:var(--ice);
+ margin:2px 0 6px;
+ text-align:center;
+}
+
+.hero-note {
+ font-size:14px;
+ color:#A9DCEB;
+ letter-spacing:.7px;
+ text-align:center;
+ margin:0;
+}
 
 .dashboard {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr;
-    gap: 16px;
-    margin-top: 22px;
-}
-
-.column {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+ display:grid;
+ grid-template-columns:1fr 1.15fr 1fr;
+ gap:12px;
+ margin-top:18px;
 }
 
 .panel {
-    position: relative;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 19px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 5px 30px #0005;
-    min-width: 0;
+ background:linear-gradient(145deg,#070d13,#020406);
+ border:1px solid var(--line);
+ border-radius:7px;
+ position:relative;
+ padding:14px;
+ min-width:0;
 }
 
-.panel::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 35px;
-    height: 2px;
-    background: var(--cyan);
-    box-shadow: 0 0 10px var(--cyan);
+.panel:before {
+ content:"";
+ position:absolute;
+ top:-1px;
+ left:13px;
+ width:40px;
+ height:2px;
+ background:var(--cyan);
+ box-shadow:0 0 7px rgba(114,223,255,.5);
 }
 
 .panel-title {
-    color: var(--cyan);
-    font: 10px 'Orbitron', sans-serif;
-    letter-spacing: 2px;
-    margin-bottom: 19px;
+ font:10px Orbitron,sans-serif;
+ letter-spacing:1.8px;
+ color:var(--ice);
+ margin:0 0 12px;
 }
 
-.label {
-    color: var(--muted);
-    font-size: 10px;
-    letter-spacing: 1px;
+.metric {
+ display:flex;
+ justify-content:space-between;
+ gap:8px;
+ border-bottom:1px solid rgba(114,223,255,.1);
+ padding:8px 0;
+ font-size:14px;
 }
 
-.value {
-    font: 13px 'Orbitron', sans-serif;
-    margin-top: 8px;
-    overflow-wrap: anywhere;
+.metric span:first-child {
+ color:#A9DCEB;
 }
 
-.data-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 11px 0;
-    border-bottom: 1px solid rgba(255,255,255,.05);
-    font-size: 11px;
+.metric strong {
+ font-weight:600;
+ color:var(--ice);
+ text-align:right;
 }
-
-.data-row:last-child {
-    border: none;
-}
-
-.data-row span:first-child {
-    color: var(--muted);
-}
-
-.data-row span:last-child {
-    color: var(--cyan);
-    text-align: right;
-}
-
-/* CENTRAL SECTION */
-
-.core-section {
-    text-align: center;
-    padding: 22px 10px;
-    overflow: hidden;
-}
-
-.core-section h1 {
-    font: 17px 'Orbitron', sans-serif;
-    letter-spacing: 3px;
-}
-
-.core-section > p {
-    color: var(--muted);
-    font-size: 11px;
-    margin-top: 10px;
-}
-
-/* HOLOGRAPHIC REACTOR */
-
-.core-wrapper {
-    width: 100%;
-    min-height: 390px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    perspective: 900px;
-}
-
-.reactor {
-    width: min(310px, 78vw);
-    aspect-ratio: 1;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    filter: drop-shadow(0 0 20px #00cfff30);
-}
-
-/* MAIN ENERGY GLOW */
-
-.reactor-glow {
-    position: absolute;
-    inset: 18%;
-    border-radius: 50%;
-    background:
-        radial-gradient(circle,
-        #b9ffff 0%,
-        #39cfff 4%,
-        #087cff 17%,
-        #05345b 43%,
-        transparent 72%);
-    box-shadow:
-        0 0 25px #00cfff88,
-        0 0 65px #087cff66,
-        inset 0 0 30px #00e5ff77;
-    animation: energyPulse 3s ease-in-out infinite;
-}
-
-/* ROTATING RINGS */
-
-.reactor-ring {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.ring-1 {
-    inset: 1%;
-    border: 2px solid transparent;
-    border-top-color: #8df7ff;
-    border-bottom-color: #087cff;
-    box-shadow: 0 0 15px #00dfff88;
-    animation: spin 8s linear infinite;
-}
-
-.ring-2 {
-    inset: 6%;
-    border: 2px dashed #00dfff88;
-    animation: spinReverse 18s linear infinite;
-}
-
-.ring-3 {
-    inset: 13%;
-    border: 1px solid #00e5ff99;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    box-shadow: 0 0 12px #00dfff44;
-    animation: spin 12s linear infinite;
-}
-
-.ring-4 {
-    inset: 19%;
-    border: 3px solid transparent;
-    border-top-color: #6af5ff;
-    border-bottom-color: #087cff;
-    border-left-color: #00aaff66;
-    box-shadow: 0 0 12px #00dfff88;
-    animation: spinReverse 6s linear infinite;
-}
-
-.ring-5 {
-    inset: 26%;
-    border: 1px solid #00dfff77;
-    animation: spin 20s linear infinite;
-}
-
-/* DIGITAL TICKS */
-
-.reactor-ticks {
-    position: absolute;
-    inset: 9%;
-    border-radius: 50%;
-    background: repeating-conic-gradient(
-        from 0deg,
-        #00e5ff 0deg 1deg,
-        transparent 1deg 7deg
-    );
-    mask-image: radial-gradient(
-        circle,
-        transparent 68%,
-        black 69%,
-        black 72%,
-        transparent 73%
-    );
-    -webkit-mask-image: radial-gradient(
-        circle,
-        transparent 68%,
-        black 69%,
-        black 72%,
-        transparent 73%
-    );
-    animation: spinReverse 35s linear infinite;
-}
-
-/* MOVING ENERGY PARTICLES */
-
-.reactor-particle {
-    position: absolute;
-    width: 7px;
-    height: 7px;
-    background: #d7ffff;
-    border-radius: 50%;
-    box-shadow:
-        0 0 8px #00e5ff,
-        0 0 18px #00e5ff;
-}
-
-.particle-1 {
-    top: 9%;
-    left: 48%;
-}
-
-.particle-2 {
-    bottom: 13%;
-    right: 12%;
-}
-
-.particle-3 {
-    top: 48%;
-    left: 5%;
-    width: 5px;
-    height: 5px;
-}
-
-/* CENTRAL CORE */
-
-.reactor-center {
-    position: absolute;
-    inset: 31%;
-    border-radius: 50%;
-    border: 2px solid #7af5ff;
-    background:
-        radial-gradient(circle at 35% 25%,
-        #42dfff,
-        #07518b 42%,
-        #03172c 85%);
-    box-shadow:
-        0 0 15px #00e5ff,
-        0 0 35px #087cff99,
-        inset 0 0 25px #00dfff88;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-}
-
-.reactor-symbol {
-    font: 600 clamp(16px, 4vw, 22px) 'Orbitron', sans-serif;
-    letter-spacing: 2px;
-    color: white;
-    text-shadow:
-        0 0 8px white,
-        0 0 20px #00e5ff;
-}
-
-.reactor-label {
-    font: 8px 'Orbitron', sans-serif;
-    letter-spacing: 2px;
-    color: #a9faff;
-    margin-top: 10px;
-}
-
-/* ANIMATIONS */
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes spinReverse {
-    to { transform: rotate(-360deg); }
-}
-
-@keyframes energyPulse {
-    0%,100% {
-        transform: scale(.95);
-        opacity: .8;
-    }
-    50% {
-        transform: scale(1.08);
-        opacity: 1;
-    }
-}
-
-/* REACTOR STATES */
-
-.reactor.listening .reactor-glow {
-    animation: listeningPulse .7s infinite alternate;
-}
-
-.reactor.thinking .reactor-ring {
-    animation-duration: 2s;
-}
-
-.reactor.speaking .reactor-glow {
-    animation: speakingPulse .45s infinite alternate;
-}
-
-@keyframes listeningPulse {
-    to {
-        transform: scale(1.15);
-        filter: hue-rotate(20deg);
-    }
-}
-
-@keyframes speakingPulse {
-    to {
-        transform: scale(1.12);
-        opacity: .65;
-    }
-}
-
-/* ACTIVITY LOG */
 
 .activity {
-    height: 180px;
-    overflow-y: auto;
-    font-size: 11px;
-    color: var(--muted);
+ font-size:13px;
+ line-height:1.5;
+ color:#A9DCEB;
+ min-height:88px;
+ max-height:118px;
+ overflow:auto;
 }
 
 .activity div {
-    padding: 10px 0;
-    border-bottom: 1px solid #ffffff0b;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
+ padding:2px 0;
 }
 
-.activity span {
-    color: var(--cyan);
+.activity b {
+ color:var(--ice);
+ font-weight:600;
 }
-
-/* CHAT */
 
 .chat-panel {
-    margin-top: 17px;
+ margin-top:13px;
 }
 
-.messages {
-    height: 175px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 5px 0 15px;
+.chat-log {
+ height:140px;
+ overflow-y:auto;
+ padding:3px 2px 12px;
+ display:flex;
+ flex-direction:column;
+ gap:9px;
 }
 
 .message {
-    max-width: 85%;
-    padding: 11px 13px;
-    border-radius: 8px;
-    font-size: 12px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
+ max-width:92%;
+ padding:9px 11px;
+ border:1px solid rgba(114,223,255,.2);
+ border-radius:6px;
+ background:#03080d;
+ font-size:15px;
+ line-height:1.35;
+ color:var(--ice);
+ overflow-wrap:anywhere;
 }
 
-.bot {
-    align-self: flex-start;
-    background: #00dfff12;
-    border-left: 2px solid var(--cyan);
+.message.user {
+ align-self:flex-end;
+ border-color:rgba(114,223,255,.4);
+ background:#07121a;
 }
 
-.user {
-    align-self: flex-end;
-    background: #087cff25;
-    border-right: 2px solid var(--blue);
+.message .who {
+ display:block;
+ font:9px Orbitron,sans-serif;
+ letter-spacing:1px;
+ color:#A9DCEB;
+ margin-bottom:4px;
 }
 
-.input-area {
-    display: flex;
-    gap: 8px;
-    border-top: 1px solid var(--border);
-    padding-top: 13px;
+.chat-form {
+ display:flex;
+ gap:8px;
 }
 
-input {
-    min-width: 0;
-    flex: 1;
-    padding: 13px;
-    background: #020a12;
-    border: 1px solid var(--border);
-    color: white;
-    border-radius: 7px;
-    outline: none;
+.chat-input {
+ flex:1;
+ min-width:0;
+ background:#020508;
+ border:1px solid rgba(114,223,255,.32);
+ border-radius:5px;
+ padding:11px;
+ color:var(--ice);
+ font:15px Rajdhani,sans-serif;
+ outline:none;
 }
 
-input:focus {
-    border-color: var(--cyan);
+.chat-input::placeholder {
+ color:#7197a4;
 }
 
-button {
-    padding: 11px 15px;
-    background: #00dfff15;
-    border: 1px solid var(--border);
-    color: var(--cyan);
-    border-radius: 7px;
-    cursor: pointer;
+.chat-input:focus {
+ border-color:var(--cyan);
+ box-shadow:0 0 9px rgba(114,223,255,.12);
 }
 
-button:active {
-    transform: scale(.96);
+.btn {
+ border:1px solid rgba(114,223,255,.48);
+ background:#050d14;
+ color:var(--ice);
+ border-radius:5px;
+ padding:0 14px;
+ font:10px Orbitron,sans-serif;
+ letter-spacing:.8px;
+ cursor:pointer;
+ min-height:41px;
 }
 
-.send {
-    background: #087cff;
-    color: white;
+.btn:active {
+ transform:scale(.98);
 }
 
-.voice {
-    font-size: 17px;
+.controls {
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ margin-top:9px;
 }
 
-.voice.active {
-    background: #ff354522;
-    border-color: #ff3545;
-    color: #ff5269;
+.controls .btn {
+ min-height:35px;
 }
 
-footer {
-    text-align: center;
-    color: #526d80;
-    font-size: 9px;
-    letter-spacing: 2px;
-    padding: 25px 0 10px;
+.mic-btn {
+ border-color:rgba(114,223,255,.7);
 }
 
-/* TABLET */
-
-@media(max-width:850px) {
-    .dashboard {
-        grid-template-columns: 1fr 1.4fr;
-    }
-
-    .centre-column {
-        grid-column: 1 / -1;
-        grid-row: 1;
-    }
+.footer {
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ color:#8AB8C7;
+ font:9px Orbitron,sans-serif;
+ letter-spacing:1px;
+ margin-top:17px;
+ padding-top:11px;
+ border-top:1px solid rgba(114,223,255,.15);
 }
 
-/* MOBILE */
+@media(max-width:760px) {
 
-@media(max-width:520px) {
-    .app {
-        padding: 12px;
-    }
+ .app {
+  padding:14px 13px 24px;
+ }
 
-    header {
-        padding-bottom: 16px;
-    }
+ .topbar {
+  padding-bottom:11px;
+ }
 
-    .logo {
-        font-size: 20px;
-    }
+ .brand {
+  font-size:15px;
+  letter-spacing:3px;
+ }
 
-    .logo small {
-        font-size: 7px;
-        letter-spacing: 1px;
-    }
+ .brand small {
+  font-size:9px;
+  letter-spacing:1.5px;
+ }
 
-    .header-right {
-        font-size: 8px;
-    }
+ .hud-wrap {
+  width:min(72vw,275px);
+  margin-bottom:11px;
+ }
 
-    .dashboard {
-        grid-template-columns: 1fr;
-    }
+ .dashboard {
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:13px;
+ }
 
-    .centre-column {
-        grid-column: auto;
-        grid-row: auto;
-    }
+ .dashboard .panel:nth-child(2) {
+  grid-column:1/-1;
+  grid-row:1;
+ }
 
-    .core-section {
-        padding: 22px 5px;
-    }
+ .panel {
+  padding:11px;
+ }
 
-    .core-section h1 {
-        font-size: 14px;
-    }
+ .chat-log {
+  height:130px;
+ }
 
-    .core-wrapper {
-        min-height: 330px;
-    }
+ .footer {
+  font-size:8px;
+ }
+}
 
-    .reactor {
-        width: min(285px, 82vw);
-    }
+@media(max-width:380px) {
 
-    .panel {
-        padding: 16px;
-    }
+ .hud-wrap {
+  width:min(74vw,250px);
+ }
 
-    .activity {
-        height: 150px;
-    }
+ .dashboard {
+  gap:7px;
+ }
 
-    .messages {
-        height: 165px;
-    }
+ .panel {
+  padding:9px;
+ }
+
+ .metric {
+  font-size:13px;
+ }
 }
 
 @media(prefers-reduced-motion:reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-    }
+ *,*::before,*::after {
+  animation:none!important;
+  scroll-behavior:auto!important;
+ }
 }
 </style>
 </head>
@@ -632,698 +497,664 @@ footer {
 
 <div class="app">
 
-<header>
+<header class="topbar">
 
-    <div class="logo">
-        A.R.I.A.
-        <small>INTELLIGENT COMMAND CENTRE</small>
-    </div>
+ <div class="brand">
+  A.R.I.A.
+  <small>ATHUL'S RESPONSIVE INTELLIGENT ASSISTANT</small>
+ </div>
 
-    <div class="header-right">
-        <div class="online">● SYSTEM ONLINE</div>
-        <div id="clock">--:--:--</div>
-        <div id="date">Loading...</div>
-    </div>
+ <div class="top-status">
+  <span class="status-dot"></span>SYSTEM ONLINE
+  <br>
+  <span id="clock">--:--:--</span>
+ </div>
 
 </header>
 
-<main class="dashboard">
 
-<!-- LEFT COLUMN -->
+<section class="hero">
 
-<div class="column">
+ <div class="hud-caption">
+  HOLOGRAPHIC INTERFACE // 01
+ </div>
 
-    <section class="panel">
-        <div class="panel-title">SYSTEM OVERVIEW</div>
+ <div class="hud-wrap" id="hud">
 
-        <div class="data-row">
-            <span>Assistant</span>
-            <span>ONLINE</span>
-        </div>
+  <svg class="hud-svg"
+       viewBox="0 0 400 400"
+       role="img"
+       aria-label="Minimal animated holographic interface">
 
-        <div class="data-row">
-            <span>Interface</span>
-            <span>ACTIVE</span>
-        </div>
+   <circle cx="200" cy="200" r="190"
+           class="fixed-ring"/>
 
-        <div class="data-row">
-            <span>Voice Module</span>
-            <span id="voiceStatus">STANDBY</span>
-        </div>
+   <circle cx="200" cy="200" r="181"
+           class="dotted-ring"/>
 
-        <div class="data-row">
-            <span>AI Connection</span>
-            <span>NOT CONNECTED</span>
-        </div>
-    </section>
+   <circle cx="200" cy="200" r="165"
+           class="fixed-ring"
+           stroke-dasharray="42 5 3 5"/>
 
-    <section class="panel">
-        <div class="panel-title">DEVICE INFORMATION</div>
+   <g class="ring inner-rotate">
 
-        <div class="data-row">
-            <span>Browser</span>
-            <span id="browser">Detecting</span>
-        </div>
+    <circle cx="200" cy="200" r="148"
+            class="segment-ring"/>
 
-        <div class="data-row">
-            <span>Platform</span>
-            <span id="platform">Detecting</span>
-        </div>
+    <circle cx="200" cy="200" r="137"
+            class="dotted-ring"/>
 
-        <div class="data-row">
-            <span>Screen</span>
-            <span id="screenSize">Detecting</span>
-        </div>
-    </section>
+   </g>
 
-    <section class="panel">
-        <div class="panel-title">QUICK COMMANDS</div>
+   <circle cx="200" cy="200" r="119"
+           class="fixed-ring"/>
 
-        <div class="data-row">
-            <span>Current Time</span>
-            <span>Available</span>
-        </div>
+   <g fill="#D9F7FF" opacity=".9">
 
-        <div class="data-row">
-            <span>Today's Date</span>
-            <span>Available</span>
-        </div>
+    <circle cx="200" cy="10" r="2.5"/>
+    <circle cx="390" cy="200" r="2.5"/>
+    <circle cx="200" cy="390" r="2.5"/>
+    <circle cx="10" cy="200" r="2.5"/>
 
-        <div class="data-row">
-            <span>Voice Input</span>
-            <span>Experimental</span>
-        </div>
-    </section>
+   </g>
 
-</div>
+   <g stroke="#D9F7FF"
+      stroke-width="1.2"
+      opacity=".65">
 
-<!-- CENTRE COLUMN -->
+    <path d="M200 20v12 M200 368v12 M20 200h12 M368 200h12"/>
 
-<div class="column centre-column">
+    <path d="M73 73l8 8 M319 319l8 8 M327 73l-8 8 M81 319l-8 8"/>
 
-    <section class="panel core-section">
+   </g>
 
-        <h1>ARTIFICIAL INTELLIGENCE</h1>
+  </svg>
 
-        <p>Your personal intelligent assistant</p>
 
-        <div class="core-wrapper">
+  <div class="core">
 
-            <div class="reactor" id="reactor">
+   <div class="core-name">A.R.I.A.</div>
 
-                <div class="reactor-glow"></div>
+   <div class="core-sub">
+    NEURAL INTERFACE
+   </div>
 
-                <div class="reactor-ring ring-1"></div>
-                <div class="reactor-ring ring-2"></div>
-                <div class="reactor-ring ring-3"></div>
-                <div class="reactor-ring ring-4"></div>
-                <div class="reactor-ring ring-5"></div>
+   <div class="core-state" id="coreState">
+    STANDBY
+   </div>
 
-                <div class="reactor-ticks"></div>
+  </div>
 
-                <div class="reactor-particle particle-1"></div>
-                <div class="reactor-particle particle-2"></div>
-                <div class="reactor-particle particle-3"></div>
+ </div>
 
-                <div class="reactor-center">
+ <h1 class="hero-title">
+  ADVANCED INTERFACE SYSTEM
+ </h1>
 
-                    <div class="reactor-symbol">A.R.I.A.</div>
-
-                    <div class="reactor-label" id="reactorLabel">
-                        CORE ACTIVE
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="label" id="coreStatus">
-            ALL SYSTEMS OPERATIONAL
-        </div>
-
-    </section>
-
-    <section class="panel">
-
-        <div class="panel-title">SYSTEM ACTIVITY</div>
-
-        <div class="activity" id="activity">
-
-            <div><span>[SYSTEM]</span> Interface initialized.</div>
-
-            <div><span>[CORE]</span> Holographic reactor active.</div>
-
-            <div><span>[READY]</span> Awaiting commands.</div>
-
-        </div>
-
-    </section>
-
-</div>
-
-<!-- RIGHT COLUMN -->
-
-<div class="column">
-
-    <section class="panel">
-
-        <div class="panel-title">ENVIRONMENT</div>
-
-        <div class="data-row">
-            <span>Connection</span>
-            <span id="connection">Checking</span>
-        </div>
-
-        <div class="data-row">
-            <span>Language</span>
-            <span id="language">Detecting</span>
-        </div>
-
-        <div class="data-row">
-            <span>Local Time</span>
-            <span>Enabled</span>
-        </div>
-
-    </section>
-
-    <section class="panel">
-
-        <div class="panel-title">CORE STATUS</div>
-
-        <div class="data-row">
-            <span>Interface</span>
-            <span>ACTIVE</span>
-        </div>
-
-        <div class="data-row">
-            <span>Command Engine</span>
-            <span>ACTIVE</span>
-        </div>
-
-        <div class="data-row">
-            <span>AI Intelligence</span>
-            <span>PENDING</span>
-        </div>
-
-    </section>
-
-    <section class="panel">
-
-        <div class="panel-title">ASSISTANT INFORMATION</div>
-
-        <div class="label">PROJECT NAME</div>
-        <div class="value">A.R.I.A. 2.1</div>
-
-        <br>
-
-        <div class="label">DEVELOPER</div>
-        <div class="value">ATHUL KM</div>
-
-        <br>
-
-        <div class="label">SYSTEM VERSION</div>
-        <div class="value">2.1.0</div>
-
-    </section>
-
-</div>
-
-</main>
-
-<!-- COMMAND INTERFACE -->
-
-<section class="panel chat-panel">
-
-    <div class="panel-title">COMMAND INTERFACE</div>
-
-    <div class="messages" id="messages">
-
-        <div class="message bot">
-            Hello! I am A.R.I.A. 2.1. My holographic reactor is online. How may I assist you?
-        </div>
-
-    </div>
-
-    <div class="input-area">
-
-        <button class="voice" id="voiceBtn" aria-label="Voice input">
-            🎙️
-        </button>
-
-        <input
-            type="text"
-            id="userInput"
-            placeholder="Enter your command..."
-            autocomplete="off"
-        >
-
-        <button class="send" id="sendBtn">
-            SEND
-        </button>
-
-    </div>
+ <p class="hero-note">
+  All systems are standing by.
+ </p>
 
 </section>
 
-<footer>
-    A.R.I.A. 2.1 | INTELLIGENT COMMAND CENTRE | 2026
+
+<section class="dashboard">
+
+ <article class="panel">
+
+  <h2 class="panel-title">
+   SYSTEM STATUS
+  </h2>
+
+  <div class="metric">
+   <span>Core</span>
+   <strong>ONLINE</strong>
+  </div>
+
+  <div class="metric">
+   <span>Voice input</span>
+   <strong id="voiceStatus">READY</strong>
+  </div>
+
+  <div class="metric">
+   <span>AI connection</span>
+   <strong>NOT CONNECTED</strong>
+  </div>
+
+  <div class="metric">
+   <span>Interface</span>
+   <strong>ACTIVE</strong>
+  </div>
+
+ </article>
+
+
+ <article class="panel">
+
+  <h2 class="panel-title">
+   SYSTEM TELEMETRY
+  </h2>
+
+  <div class="metric">
+   <span>Local time</span>
+   <strong id="timeMetric">--:--:--</strong>
+  </div>
+
+  <div class="metric">
+   <span>Date</span>
+   <strong id="dateMetric">---</strong>
+  </div>
+
+  <div class="metric">
+   <span>Platform</span>
+   <strong id="platformMetric">WEB DEVICE</strong>
+  </div>
+
+  <div class="metric">
+   <span>Network</span>
+   <strong id="networkMetric">CHECKING</strong>
+  </div>
+
+ </article>
+
+
+ <article class="panel">
+
+  <h2 class="panel-title">
+   ACTIVITY LOG
+  </h2>
+
+  <div class="activity" id="activity">
+
+   <div><b>[BOOT]</b> A.R.I.A. interface initialized.</div>
+
+   <div><b>[HUD]</b> Holographic display active.</div>
+
+   <div><b>[VOICE]</b> Awaiting user input.</div>
+
+  </div>
+
+ </article>
+
+</section>
+
+
+<section class="panel chat-panel">
+
+ <h2 class="panel-title">
+  COMMUNICATION CONSOLE
+ </h2>
+
+ <div class="chat-log" id="chatLog" aria-live="polite">
+
+  <div class="message">
+   <span class="who">A.R.I.A.</span>
+   Systems online. Hello! How can I assist you?
+  </div>
+
+ </div>
+
+
+ <form class="chat-form" id="chatForm">
+
+  <input
+   class="chat-input"
+   id="userInput"
+   type="text"
+   placeholder="Enter a command..."
+   autocomplete="off"
+   aria-label="Enter a command">
+
+  <button class="btn" type="submit">
+   SEND
+  </button>
+
+ </form>
+
+
+ <div class="controls">
+
+  <button class="btn mic-btn" id="micBtn" type="button">
+   🎙 ACTIVATE VOICE
+  </button>
+
+  <button class="btn" id="speakBtn" type="button">
+   🔊 VOICE: ON
+  </button>
+
+  <button class="btn" id="clearBtn" type="button">
+   CLEAR LOG
+  </button>
+
+ </div>
+
+</section>
+
+
+<footer class="footer">
+
+ <span>A.R.I.A. // PROTOTYPE 2.5</span>
+
+ <span>BUILT FOR THE FUTURE</span>
+
 </footer>
 
 </div>
 
+
 <script>
 
-/* CLOCK */
+const $ = id => document.getElementById(id);
+
+const hud = $('hud');
+
 
 function updateClock() {
 
-    const now = new Date();
+ const now = new Date();
 
-    document.getElementById("clock").textContent =
-        now.toLocaleTimeString();
+ $('clock').textContent =
+  now.toLocaleTimeString();
 
-    document.getElementById("date").textContent =
-        now.toLocaleDateString();
+ $('timeMetric').textContent =
+  now.toLocaleTimeString();
+
+ $('dateMetric').textContent =
+  now.toLocaleDateString(undefined,{
+   day:'2-digit',
+   month:'short',
+   year:'numeric'
+  });
 
 }
 
-setInterval(updateClock, 1000);
 updateClock();
 
-
-/* DEVICE INFORMATION */
-
-const ua = navigator.userAgent;
-
-document.getElementById("browser").textContent =
-    ua.includes("Safari") && !ua.includes("Chrome")
-    ? "Safari"
-    : ua.includes("Chrome")
-    ? "Chrome"
-    : "Other";
-
-document.getElementById("platform").textContent =
-    navigator.userAgentData?.platform ||
-    navigator.platform ||
-    "Unknown";
-
-document.getElementById("screenSize").textContent =
-    screen.width + " × " + screen.height;
-
-document.getElementById("language").textContent =
-    navigator.language;
+setInterval(updateClock,1000);
 
 
-/* CONNECTION */
+$('platformMetric').textContent =
+ /iPhone|iPad|iPod/i.test(navigator.userAgent)
+ ? 'APPLE DEVICE'
+ : /Android/i.test(navigator.userAgent)
+ ? 'ANDROID DEVICE'
+ : 'WEB DEVICE';
 
-function updateConnection() {
 
-    document.getElementById("connection").textContent =
-        navigator.onLine ? "ONLINE" : "OFFLINE";
+function updateNetwork() {
+
+ $('networkMetric').textContent =
+  navigator.onLine ? 'CONNECTED' : 'OFFLINE';
 
 }
 
-updateConnection();
+updateNetwork();
 
-window.addEventListener("online", updateConnection);
-window.addEventListener("offline", updateConnection);
+window.addEventListener('online',updateNetwork);
+
+window.addEventListener('offline',updateNetwork);
 
 
-/* REACTOR STATES */
+let voiceEnabled = true;
+let recognition = null;
+let isListening = false;
 
-const reactor = document.getElementById("reactor");
 
-function setReactorState(state) {
+function logActivity(text) {
 
-    reactor.classList.remove(
-        "listening",
-        "thinking",
-        "speaking"
-    );
+ const row = document.createElement('div');
 
-    if (state !== "idle") {
-        reactor.classList.add(state);
-    }
+ const time = new Date().toLocaleTimeString();
 
-    const labels = {
-        idle: "CORE ACTIVE",
-        listening: "LISTENING",
-        thinking: "PROCESSING",
-        speaking: "SPEAKING"
-    };
+ row.innerHTML =
+  '<b>['+time+']</b> '+escapeHTML(text);
 
-    document.getElementById("reactorLabel").textContent =
-        labels[state] || "CORE ACTIVE";
+ $('activity').prepend(row);
 
-    const statusText = {
-        idle: "ALL SYSTEMS OPERATIONAL",
-        listening: "VOICE INPUT ACTIVE",
-        thinking: "PROCESSING COMMAND",
-        speaking: "VOICE OUTPUT ACTIVE"
-    };
-
-    document.getElementById("coreStatus").textContent =
-        statusText[state] || "CORE ACTIVE";
+ while($('activity').children.length > 8) {
+  $('activity').lastElementChild.remove();
+ }
 
 }
 
 
-/* ACTIVITY LOG */
+function escapeHTML(value) {
 
-function logActivity(message) {
-
-    const activity = document.getElementById("activity");
-
-    const item = document.createElement("div");
-
-    const time = new Date().toLocaleTimeString();
-
-    const label = document.createElement("span");
-
-    label.textContent = "[" + time + "] ";
-
-    item.appendChild(label);
-
-    item.appendChild(
-        document.createTextNode(message)
-    );
-
-    activity.prepend(item);
-
-    while (activity.children.length > 12) {
-        activity.lastElementChild.remove();
-    }
+ return String(value).replace(/[&<>"']/g,c=>({
+  '&':'&amp;',
+  '<':'&lt;',
+  '>':'&gt;',
+  '"':'&quot;',
+  "'":'&#39;'
+ }[c]));
 
 }
 
 
-/* CHAT */
+function addMessage(text,who) {
 
-const messages = document.getElementById("messages");
+ const msg = document.createElement('div');
 
-const input = document.getElementById("userInput");
+ msg.className =
+  'message '+(who==='YOU'?'user':'');
 
-function addMessage(text, type) {
+ const label = document.createElement('span');
 
-    const div = document.createElement("div");
+ label.className = 'who';
 
-    div.className = "message " + type;
+ label.textContent = who;
 
-    div.textContent = text;
+ const body = document.createElement('span');
 
-    messages.appendChild(div);
+ body.textContent = text;
 
-    messages.scrollTop = messages.scrollHeight;
+ msg.append(label,body);
+
+ $('chatLog').appendChild(msg);
+
+ $('chatLog').scrollTop =
+  $('chatLog').scrollHeight;
 
 }
 
 
-/* SPEECH */
+function setState(state) {
+
+ hud.classList.remove(
+  'listening',
+  'thinking',
+  'speaking'
+ );
+
+ if(state !== 'standby') {
+  hud.classList.add(state);
+ }
+
+ $('coreState').textContent =
+  state.toUpperCase();
+
+}
+
 
 function speak(text) {
 
-    if (!("speechSynthesis" in window)) {
-        return;
-    }
+ if(!voiceEnabled || !('speechSynthesis' in window)) {
+  return;
+ }
 
-    speechSynthesis.cancel();
+ speechSynthesis.cancel();
 
-    const speech = new SpeechSynthesisUtterance(text);
+ setState('speaking');
 
-    speech.rate = 1;
-    speech.pitch = 1.05;
+ const utterance =
+  new SpeechSynthesisUtterance(text);
 
-    speech.onstart = () => {
+ utterance.rate = 1;
 
-        setReactorState("speaking");
+ utterance.pitch = 1.02;
 
-        logActivity("Voice output started.");
+ utterance.onend = () => setState('standby');
 
-    };
+ utterance.onerror = () => setState('standby');
 
-    speech.onend = () => {
-
-        setReactorState("idle");
-
-    };
-
-    speech.onerror = () => {
-
-        setReactorState("idle");
-
-    };
-
-    speechSynthesis.speak(speech);
+ speechSynthesis.speak(utterance);
 
 }
 
 
-/* BASIC COMMAND ENGINE */
+function respond(input) {
 
-function respond(command) {
+ const q = input.toLowerCase().trim();
 
-    const text = command.toLowerCase();
-
-    let answer;
-
-    if (
-        text.includes("hello") ||
-        text.includes("hi")
-    ) {
-
-        answer = "Hello! How can I assist you today?";
-
-    }
-
-    else if (
-        text.includes("your name") ||
-        text.includes("who are you")
-    ) {
-
-        answer =
-            "I am A.R.I.A., Athul's Responsive Intelligent Assistant.";
-
-    }
-
-    else if (text.includes("time")) {
-
-        answer =
-            "The current time is " +
-            new Date().toLocaleTimeString();
-
-    }
-
-    else if (
-        text.includes("date") ||
-        text.includes("today")
-    ) {
-
-        answer =
-            "Today's date is " +
-            new Date().toLocaleDateString();
-
-    }
-
-    else if (text.includes("how are you")) {
-
-        answer =
-            "All systems are operational. I am ready to assist you.";
-
-    }
-
-    else if (text.includes("thank")) {
-
-        answer =
-            "You're welcome. Always happy to assist.";
-
-    }
-
-    else if (text.includes("help")) {
-
-        answer =
-            "You can ask me about my identity, the current time, or today's date. More capabilities are under development.";
-
-    }
-
-    else {
-
-        answer =
-            "Command received. My advanced intelligence module is still under development.";
-
-    }
-
-    addMessage(answer, "bot");
-
-    logActivity("Response generated.");
-
-    speak(answer);
-
-}
+ let answer;
 
 
-/* SEND COMMAND */
+ if(/\b(hello|hi|hey)\b/.test(q)) {
 
-function sendMessage() {
+  answer = 'Hello! A.R.I.A. is online and ready.';
 
-    const command = input.value.trim();
+ }
 
-    if (!command) return;
+ else if(q.includes('your name')) {
 
-    addMessage(command, "user");
+  answer =
+   'I am A.R.I.A., Athul’s Responsive Intelligent Assistant.';
 
-    input.value = "";
+ }
 
-    setReactorState("thinking");
+ else if(q.includes('time')) {
 
-    logActivity("Command received.");
+  answer =
+   'The current time is '+
+   new Date().toLocaleTimeString()+'.';
 
-    setTimeout(() => {
+ }
 
-        respond(command);
+ else if(q.includes('date') || q.includes('today')) {
 
-        if (
-            !("speechSynthesis" in window) ||
-            speechSynthesis.speaking === false
-        ) {
-            setReactorState("idle");
-        }
+  answer =
+   'Today is '+
+   new Date().toLocaleDateString(undefined,{
+    weekday:'long',
+    year:'numeric',
+    month:'long',
+    day:'numeric'
+   })+'.';
 
-    }, 400);
+ }
+
+ else if(q.includes('who are you')) {
+
+  answer =
+   'I am A.R.I.A., your experimental digital assistant interface.';
+
+ }
+
+ else if(q.includes('status')) {
+
+  answer =
+   'My interface is online. Voice features depend on browser support. A live AI service has not been connected yet.';
+
+ }
+
+ else if(q.includes('help')) {
+
+  answer =
+   'You can ask for the time, date, my name, or system status. More abilities will be added when an AI service is connected.';
+
+ }
+
+ else if(q.includes('thank')) {
+
+  answer =
+   'You are welcome. Standing by.';
+
+ }
+
+ else {
+
+  answer =
+   'I received your command: '+input+
+   '. My live AI connection is not configured yet, so I cannot answer that request intelligently at the moment.';
+
+ }
+
+
+ setState('thinking');
+
+ logActivity('Command received: '+input);
+
+ setTimeout(()=>{
+
+  addMessage(answer,'A.R.I.A.');
+
+  setState('standby');
+
+  speak(answer);
+
+ },450);
 
 }
 
 
-document.getElementById("sendBtn").addEventListener(
-    "click",
-    sendMessage
-);
+$('chatForm').addEventListener('submit',e=>{
 
-input.addEventListener("keydown", event => {
+ e.preventDefault();
 
-    if (event.key === "Enter") {
-        sendMessage();
-    }
+ const value = $('userInput').value.trim();
+
+ if(!value) return;
+
+ addMessage(value,'YOU');
+
+ $('userInput').value = '';
+
+ respond(value);
 
 });
 
-
-/* VOICE RECOGNITION */
 
 const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
+ window.SpeechRecognition ||
+ window.webkitSpeechRecognition;
 
-const voiceBtn = document.getElementById("voiceBtn");
 
-let recognition = null;
+if(SpeechRecognition) {
 
-let listening = false;
+ recognition = new SpeechRecognition();
 
-if (SpeechRecognition) {
+ recognition.lang = 'en-US';
 
-    recognition = new SpeechRecognition();
+ recognition.interimResults = false;
 
-    recognition.lang = "en-US";
+ recognition.continuous = false;
 
-    recognition.continuous = false;
 
-    recognition.interimResults = false;
+ recognition.onstart = ()=>{
 
-    recognition.onstart = () => {
+  isListening = true;
 
-        listening = true;
+  setState('listening');
 
-        voiceBtn.classList.add("active");
+  $('voiceStatus').textContent = 'LISTENING';
 
-        setReactorState("listening");
+  $('micBtn').textContent = '● LISTENING...';
 
-        document.getElementById("voiceStatus").textContent =
-            "LISTENING";
+  logActivity('Voice input activated.');
 
-        logActivity("Voice recognition started.");
+ };
 
-    };
 
-    recognition.onresult = event => {
+ recognition.onresult = e=>{
 
-        input.value =
-            event.results[0][0].transcript;
+  const transcript =
+   e.results[0][0].transcript;
 
-        sendMessage();
+  $('userInput').value = transcript;
 
-    };
+  addMessage(transcript,'YOU');
 
-    recognition.onerror = event => {
+  respond(transcript);
 
-        logActivity(
-            "Voice recognition error: " + event.error
-        );
+ };
 
-    };
 
-    recognition.onend = () => {
+ recognition.onerror = e=>{
 
-        listening = false;
+  logActivity('Voice input issue: '+e.error);
 
-        voiceBtn.classList.remove("active");
+  setState('standby');
 
-        document.getElementById("voiceStatus").textContent =
-            "STANDBY";
+ };
 
-        if (!speechSynthesis?.speaking) {
-            setReactorState("idle");
-        }
 
-    };
+ recognition.onend = ()=>{
+
+  isListening = false;
+
+  $('voiceStatus').textContent = 'READY';
+
+  $('micBtn').textContent = '🎙 ACTIVATE VOICE';
+
+  if(
+   !hud.classList.contains('thinking') &&
+   !hud.classList.contains('speaking')
+  ) {
+   setState('standby');
+  }
+
+ };
+
+} else {
+
+ $('voiceStatus').textContent = 'UNAVAILABLE';
+
+ $('micBtn').disabled = true;
+
+ $('micBtn').textContent = 'VOICE NOT SUPPORTED';
 
 }
 
 
-voiceBtn.addEventListener("click", () => {
+$('micBtn').addEventListener('click',()=>{
 
-    if (!recognition) {
+ if(!recognition) {
 
-        addMessage(
-            "Voice recognition is not supported in this browser.",
-            "bot"
-        );
+  addMessage(
+   'Voice recognition is not supported by this browser. Try a supported browser and allow microphone access.',
+   'A.R.I.A.'
+  );
 
-        return;
+  return;
 
-    }
+ }
 
-    if (listening) {
+ if(isListening) {
 
-        recognition.stop();
+  recognition.stop();
 
-    } else {
+  return;
 
-        try {
+ }
 
-            recognition.start();
+ try {
 
-        } catch (error) {
+  recognition.start();
 
-            logActivity(
-                "Unable to start voice recognition."
-            );
+ } catch(err) {
 
-        }
+  logActivity('Microphone could not start.');
 
-    }
+ }
 
 });
 
 
-/* INITIALIZATION */
+$('speakBtn').addEventListener('click',()=>{
 
-logActivity("A.R.I.A. 2.1 initialized.");
+ voiceEnabled = !voiceEnabled;
 
-logActivity("Holographic reactor activated.");
+ $('speakBtn').textContent =
+  voiceEnabled ? '🔊 VOICE: ON' : '🔇 VOICE: OFF';
 
-logActivity("Command centre ready.");
+ if(!voiceEnabled && 'speechSynthesis' in window) {
+  speechSynthesis.cancel();
+ }
+
+ logActivity(
+  'Voice output '+(voiceEnabled?'enabled':'disabled')+'.'
+ );
+
+});
+
+
+$('clearBtn').addEventListener('click',()=>{
+
+ $('chatLog').innerHTML = '';
+
+ logActivity('Communication log cleared.');
+
+});
 
 </script>
 
