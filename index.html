@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A.R.I.A. | AI Assistant</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #050b16;
+    color: #eafaff;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px;
+    border-bottom: 1px solid #123044;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: #48dcff;
+}
+
+.status {
+    font-size: 12px;
+    color: #4cffaa;
+}
+
+main {
+    max-width: 600px;
+    margin: auto;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+.subtitle {
+    color: #7994a8;
+    margin-top: 8px;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.orb-container {
+    display: flex;
+    justify-content: center;
+    margin: 55px 0 35px;
+}
+
+.orb {
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        #35dfff 0%,
+        #0879b8 35%,
+        #092a50 65%,
+        #050b16 100%
+    );
+
+    box-shadow:
+        0 0 25px #00cfff,
+        0 0 65px #0077aa,
+        inset 0 0 30px #8af4ff;
+
+    animation: pulse 3s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 25px #00cfff,
+                    0 0 65px #0077aa;
+    }
+
+    50% {
+        transform: scale(1.07);
+        box-shadow: 0 0 40px #00eaff,
+                    0 0 90px #0077aa;
+    }
+}
+
+#assistant-status {
+    color: #49dfff;
+    font-size: 15px;
+    margin-bottom: 25px;
+}
+
+.chat-box {
+    height: 260px;
+    overflow-y: auto;
+    background: #091522;
+    border: 1px solid #15354a;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.message {
+    padding: 11px 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 90%;
+}
+
+.user {
+    background: #103b58;
+    margin-left: auto;
+    color: #c8f4ff;
+}
+
+.aria {
+    background: #102333;
+    color: #65dcff;
+}
+
+.input-area {
+    display: flex;
+    gap: 8px;
+}
+
+input {
+    flex: 1;
+    min-width: 0;
+    padding: 14px;
+    background: #0b1928;
+    border: 1px solid #17445d;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+}
+
+button {
+    background: #087ca8;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 15px;
+    cursor: pointer;
+}
+
+button:active {
+    opacity: 0.7;
+}
+
+.mic {
+    margin-top: 18px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    font-size: 25px;
+    background: #092d47;
+    border: 1px solid #22cfff;
+    box-shadow: 0 0 20px #007ca8;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #506b7e;
+    font-size: 11px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">A.R.I.A.</div>
+    <div class="status">● SYSTEM ONLINE</div>
+</header>
+
+<main>
+
+    <h2>ATHUL'S PERSONAL AI</h2>
+
+    <p class="subtitle">
+        RESPONSIVE INTELLIGENT ASSISTANT
+    </p>
+
+    <div class="orb-container">
+        <div class="orb"></div>
+    </div>
+
+    <p id="assistant-status">
+        Hello Athul. I'm ready.
+    </p>
+
+    <div class="chat-box" id="chat">
+
+        <div class="message aria">
+            A.R.I.A.: Hello Athul! I'm your personal assistant.
+            How can I help you today?
+        </div>
+
+    </div>
+
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="user-input"
+            placeholder="Talk to A.R.I.A..."
+        >
+
+        <button onclick="sendMessage()">
+            SEND
+        </button>
+
+    </div>
+
+    <button class="mic" onclick="micMessage()">
+        🎙️
+    </button>
+
+</main>
+
+<footer>
+    A.R.I.A. V1.0 | PERSONAL AI PROJECT
+</footer>
+
+<script>
+
+function sendMessage() {
+
+    const input = document.getElementById("user-input");
+    const chat = document.getElementById("chat");
+
+    const message = input.value.trim();
+
+    if (!message) return;
+
+    addMessage("user", "You: " + message);
+
+    const command = message.toLowerCase();
+
+    let response;
+
+    if (command.includes("hello") ||
+        command.includes("hi")) {
+
+        response = "Hello Athul! Good to hear from you.";
+
+    } else if (command.includes("your name")) {
+
+        response = "I'm A.R.I.A., your personal AI assistant.";
+
+    } else if (command.includes("time")) {
+
+        response = "The current time is " +
+        new Date().toLocaleTimeString();
+
+    } else if (command.includes("date")) {
+
+        response = "Today is " +
+        new Date().toLocaleDateString();
+
+    } else if (command.includes("who are you")) {
+
+        response = "I'm Athul's Responsive Intelligent Assistant.";
+
+    } else {
+
+        response = "I'm still learning, Athul. More intelligence is coming soon!";
+
+    }
+
+    setTimeout(() => {
+
+        addMessage("aria", "A.R.I.A.: " + response);
+
+    }, 500);
+
+    input.value = "";
+
+}
+
+function addMessage(type, text) {
+
+    const chat = document.getElementById("chat");
+
+    const message = document.createElement("div");
+
+    message.className = "message " + type;
+
+    message.textContent = text;
+
+    chat.appendChild(message);
+
+    chat.scrollTop = chat.scrollHeight;
+
+}
+
+function micMessage() {
+
+    document.getElementById("assistant-status").textContent =
+    "Voice activation is coming in the next update.";
+
+}
+
+document.getElementById("user-input")
+.addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
