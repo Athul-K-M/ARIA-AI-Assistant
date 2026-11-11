@@ -904,38 +904,23 @@ function speak(text){
  speechSynthesis.speak(utterance);
 
 }
-
-
-function respond(input){
-
+async function respond(input){
  const q = input.toLowerCase().trim();
-
  let answer;
-
-
+ // EXISTING COMMANDS
  if(/\b(hello|hi|hey)\b/.test(q)){
-
-  answer = 'Hello! A.R.I.A. is online and ready.';
-
+  answer = 'Hello! A.R.I.A. is ready.';
  }
-
  else if(q.includes('your name')){
-
   answer =
    'I am A.R.I.A., Athul’s Responsive Intelligent Assistant.';
-
  }
-
  else if(q.includes('time')){
-
   answer =
    'The current time is '+
    new Date().toLocaleTimeString()+'.';
-
  }
-
  else if(q.includes('date') || q.includes('today')){
-
   answer =
    'Today is '+
    new Date().toLocaleDateString(undefined,{
@@ -944,61 +929,52 @@ function respond(input){
     month:'long',
     day:'numeric'
    })+'.';
-
  }
-
  else if(q.includes('who are you')){
-
   answer =
    'I am A.R.I.A., your experimental digital assistant interface.';
-
  }
-
  else if(q.includes('status')){
-
-  answer =
-   'My interface is online. Voice features depend on browser support. A live AI service has not been connected yet.';
-
+  answer = navigator.onLine
+   ? 'My interface is online. My offline command engine is ready.'
+   : 'I am currently offline, but my local command engine is operational.';
  }
-
  else if(q.includes('help')){
-
   answer =
-   'You can ask for the time, date, my name, or system status. More abilities will be added when an AI service is connected.';
-
+   'I can tell you the time and date, calculate numbers, save notes, read saved notes, start timers, read text aloud and open supported websites.';
  }
-
  else if(q.includes('thank')){
-
   answer =
    'You are welcome. Standing by.';
-
  }
-
+ // NEW OFFLINE COMMAND ENGINE
+ else if(window.ARIAOffline){
+  const result =
+   await window.ARIAOffline.handleCommand(input);
+  if(result.handled){
+   answer = result.response;
+  }
+  else{
+   answer =
+    'I received your command: '+input+
+    '. I do not recognize this command yet. My offline capabilities will continue to improve.';
+  }
+ }
  else{
-
   answer =
-   'I received your command: '+input+
-   '. My live AI connection is not configured yet, so I cannot answer that request intelligently at the moment.';
-
+   'My offline engine is not available. Please check the connection between my system files.';
  }
-
-
+ // EXISTING INTERFACE BEHAVIOUR
  setState('thinking');
-
  logActivity('Command received: '+input);
-
  setTimeout(()=>{
-
   addMessage(answer,'A.R.I.A.');
-
   setState('standby');
-
   speak(answer);
-
  },450);
-
 }
+
+
 
 
 $('chatForm').addEventListener('submit',e=>{
