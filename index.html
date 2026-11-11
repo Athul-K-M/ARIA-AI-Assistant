@@ -9,7 +9,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
 
-:root {
+:root{
  --bg:#000;
  --ice:#D9F7FF;
  --cyan:#72DFFF;
@@ -18,45 +18,49 @@
  --panel:#05090e;
 }
 
-* {
- box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html,body {
+html,body{
  margin:0;
  min-height:100%;
  background:#000;
  color:var(--ice);
 }
 
-body {
+body{
  font-family:'Rajdhani',Arial,sans-serif;
  overflow-x:hidden;
 }
 
-.app {
- width:min(1080px,100%);
- margin:auto;
+.app{
+ width:100%;
+ max-width:1080px;
+ margin:0 auto;
  padding:20px 22px 32px;
+ overflow:hidden;
 }
 
-.topbar {
+.topbar{
+ width:100%;
  display:flex;
  align-items:center;
  justify-content:space-between;
  gap:12px;
  border-bottom:1px solid var(--line);
  padding:4px 2px 14px;
+ min-width:0;
 }
 
-.brand {
+.brand{
+ min-width:0;
+ flex:1;
  font:600 18px Orbitron,sans-serif;
  letter-spacing:4px;
  color:var(--ice);
  text-shadow:0 0 10px rgba(114,223,255,.3);
 }
 
-.brand small {
+.brand small{
  display:block;
  font:10px Rajdhani,sans-serif;
  letter-spacing:2.5px;
@@ -64,15 +68,18 @@ body {
  margin-top:5px;
 }
 
-.top-status {
+.top-status{
+ flex:0 0 auto;
+ max-width:42%;
  font:10px Orbitron,sans-serif;
  letter-spacing:1.3px;
  color:var(--ice);
  text-align:right;
  line-height:1.8;
+ overflow-wrap:anywhere;
 }
 
-.status-dot {
+.status-dot{
  display:inline-block;
  width:7px;
  height:7px;
@@ -82,14 +89,18 @@ body {
  margin-right:7px;
 }
 
-.hero {
+/* MAIN HOLOGRAPHIC SECTION */
+
+.hero{
+ width:100%;
  display:flex;
  flex-direction:column;
  align-items:center;
+ text-align:center;
  padding:19px 0 8px;
 }
 
-.hud-caption {
+.hud-caption{
  font:10px Orbitron,sans-serif;
  letter-spacing:2.5px;
  color:#9CCBD9;
@@ -97,58 +108,61 @@ body {
  text-align:center;
 }
 
-.hud-wrap {
+.hud-wrap{
  width:min(68vw,310px);
  aspect-ratio:1;
  position:relative;
  display:grid;
  place-items:center;
  margin:0 auto 13px;
+ flex-shrink:0;
 }
 
-.hud-svg {
+.hud-svg{
  width:100%;
  height:100%;
  display:block;
  overflow:visible;
 }
 
-.ring {
+.ring{
  transform-origin:200px 200px;
  fill:none;
 }
 
-.fixed-ring {
+.fixed-ring{
  stroke:#5BCDF5;
  stroke-width:1.5;
  opacity:.72;
 }
 
-.dotted-ring {
+.dotted-ring{
  stroke:#83E5FF;
  stroke-width:2;
  stroke-dasharray:1 7;
  opacity:.8;
 }
 
-.segment-ring {
+.segment-ring{
  stroke:#9AEAFF;
  stroke-width:5;
  stroke-dasharray:18 11 4 11;
  opacity:.9;
 }
 
-.inner-rotate {
+/* ONLY THE INNER RINGS ROTATE */
+
+.inner-rotate{
  animation:spin 52s linear infinite;
 }
 
-@keyframes spin {
- to {
-  transform:rotate(360deg);
- }
+@keyframes spin{
+ to{transform:rotate(360deg)}
 }
 
-.core {
+/* CENTRAL CIRCLE */
+
+.core{
  position:absolute;
  width:43%;
  height:43%;
@@ -156,7 +170,6 @@ body {
  display:flex;
  align-items:center;
  justify-content:center;
- flex-direction:column;
 
  background:radial-gradient(
   circle at 50% 40%,
@@ -173,7 +186,7 @@ body {
  0 0 22px rgba(22,140,255,.22);
 }
 
-.core:before {
+.core:before{
  content:"";
  position:absolute;
  inset:-7px;
@@ -181,47 +194,47 @@ body {
  border:1px solid rgba(114,223,255,.35);
 }
 
-.core-name {
+/* THE ONLY TEXT INSIDE THE CIRCLE */
+
+.core-name{
  font:600 clamp(17px,4.6vw,23px) Orbitron,sans-serif;
  letter-spacing:2px;
  color:var(--ice);
  text-shadow:0 0 9px rgba(114,223,255,.55);
+ text-align:center;
 }
 
-.core-sub {
- font:8px Orbitron,sans-serif;
- letter-spacing:1.5px;
- color:#A9DCEB;
- margin-top:7px;
-}
+/* STATUS IS OUTSIDE THE CIRCLE */
 
-.core-state {
- font:8px Orbitron,sans-serif;
- letter-spacing:1.4px;
+.hud-status{
+ font:9px Orbitron,sans-serif;
+ letter-spacing:2px;
  color:var(--ice);
- margin-top:10px;
+ text-align:center;
+ margin:0 auto 9px;
+ text-shadow:0 0 8px rgba(114,223,255,.35);
 }
 
-.hud-wrap.listening .core {
+.hud-wrap.listening .core{
  box-shadow:
  inset 0 0 18px rgba(114,223,255,.2),
  0 0 13px rgba(114,223,255,.9);
 }
 
 .hud-wrap.thinking .core,
-.hud-wrap.speaking .core {
+.hud-wrap.speaking .core{
  animation:pulse 1.5s ease-in-out infinite alternate;
 }
 
-@keyframes pulse {
- to {
+@keyframes pulse{
+ to{
   box-shadow:
   inset 0 0 22px rgba(114,223,255,.25),
   0 0 17px rgba(114,223,255,.9);
  }
 }
 
-.hero-title {
+.hero-title{
  font:600 11px Orbitron,sans-serif;
  letter-spacing:2.4px;
  color:var(--ice);
@@ -229,7 +242,7 @@ body {
  text-align:center;
 }
 
-.hero-note {
+.hero-note{
  font-size:14px;
  color:#A9DCEB;
  letter-spacing:.7px;
@@ -237,14 +250,16 @@ body {
  margin:0;
 }
 
-.dashboard {
+/* DASHBOARD */
+
+.dashboard{
  display:grid;
  grid-template-columns:1fr 1.15fr 1fr;
  gap:12px;
  margin-top:18px;
 }
 
-.panel {
+.panel{
  background:linear-gradient(145deg,#070d13,#020406);
  border:1px solid var(--line);
  border-radius:7px;
@@ -253,7 +268,7 @@ body {
  min-width:0;
 }
 
-.panel:before {
+.panel:before{
  content:"";
  position:absolute;
  top:-1px;
@@ -264,14 +279,14 @@ body {
  box-shadow:0 0 7px rgba(114,223,255,.5);
 }
 
-.panel-title {
+.panel-title{
  font:10px Orbitron,sans-serif;
  letter-spacing:1.8px;
  color:var(--ice);
  margin:0 0 12px;
 }
 
-.metric {
+.metric{
  display:flex;
  justify-content:space-between;
  gap:8px;
@@ -280,17 +295,17 @@ body {
  font-size:14px;
 }
 
-.metric span:first-child {
+.metric span:first-child{
  color:#A9DCEB;
 }
 
-.metric strong {
+.metric strong{
  font-weight:600;
  color:var(--ice);
  text-align:right;
 }
 
-.activity {
+.activity{
  font-size:13px;
  line-height:1.5;
  color:#A9DCEB;
@@ -299,20 +314,20 @@ body {
  overflow:auto;
 }
 
-.activity div {
- padding:2px 0;
-}
+.activity div{padding:2px 0}
 
-.activity b {
+.activity b{
  color:var(--ice);
  font-weight:600;
 }
 
-.chat-panel {
+/* COMMUNICATION CONSOLE */
+
+.chat-panel{
  margin-top:13px;
 }
 
-.chat-log {
+.chat-log{
  height:140px;
  overflow-y:auto;
  padding:3px 2px 12px;
@@ -321,7 +336,7 @@ body {
  gap:9px;
 }
 
-.message {
+.message{
  max-width:92%;
  padding:9px 11px;
  border:1px solid rgba(114,223,255,.2);
@@ -333,13 +348,13 @@ body {
  overflow-wrap:anywhere;
 }
 
-.message.user {
+.message.user{
  align-self:flex-end;
  border-color:rgba(114,223,255,.4);
  background:#07121a;
 }
 
-.message .who {
+.message .who{
  display:block;
  font:9px Orbitron,sans-serif;
  letter-spacing:1px;
@@ -347,12 +362,12 @@ body {
  margin-bottom:4px;
 }
 
-.chat-form {
+.chat-form{
  display:flex;
  gap:8px;
 }
 
-.chat-input {
+.chat-input{
  flex:1;
  min-width:0;
  background:#020508;
@@ -364,16 +379,16 @@ body {
  outline:none;
 }
 
-.chat-input::placeholder {
+.chat-input::placeholder{
  color:#7197a4;
 }
 
-.chat-input:focus {
+.chat-input:focus{
  border-color:var(--cyan);
  box-shadow:0 0 9px rgba(114,223,255,.12);
 }
 
-.btn {
+.btn{
  border:1px solid rgba(114,223,255,.48);
  background:#050d14;
  color:var(--ice);
@@ -385,26 +400,24 @@ body {
  min-height:41px;
 }
 
-.btn:active {
+.btn:active{
  transform:scale(.98);
 }
 
-.controls {
+.controls{
  display:flex;
  gap:8px;
  flex-wrap:wrap;
  margin-top:9px;
 }
 
-.controls .btn {
- min-height:35px;
-}
+.controls .btn{min-height:35px}
 
-.mic-btn {
+.mic-btn{
  border-color:rgba(114,223,255,.7);
 }
 
-.footer {
+.footer{
  display:flex;
  justify-content:space-between;
  gap:10px;
@@ -416,79 +429,80 @@ body {
  border-top:1px solid rgba(114,223,255,.15);
 }
 
-@media(max-width:760px) {
+/* MOBILE ALIGNMENT */
 
- .app {
+@media(max-width:760px){
+
+ .app{
   padding:14px 13px 24px;
  }
 
- .topbar {
+ .topbar{
   padding-bottom:11px;
+  align-items:flex-start;
+  gap:8px;
  }
 
- .brand {
+ .brand{
   font-size:15px;
   letter-spacing:3px;
  }
 
- .brand small {
+ .brand small{
   font-size:9px;
   letter-spacing:1.5px;
  }
 
- .hud-wrap {
+ .top-status{
+  max-width:38%;
+  font-size:9px;
+ }
+
+ .hud-wrap{
   width:min(72vw,275px);
   margin-bottom:11px;
  }
 
- .dashboard {
+ .dashboard{
   grid-template-columns:1fr 1fr;
   gap:9px;
   margin-top:13px;
  }
 
- .dashboard .panel:nth-child(2) {
+ .dashboard .panel:nth-child(2){
   grid-column:1/-1;
   grid-row:1;
  }
 
- .panel {
-  padding:11px;
- }
+ .panel{padding:11px}
 
- .chat-log {
-  height:130px;
- }
+ .chat-log{height:130px}
 
- .footer {
-  font-size:8px;
- }
+ .footer{font-size:8px}
 }
 
-@media(max-width:380px) {
+@media(max-width:380px){
 
- .hud-wrap {
+ .hud-wrap{
   width:min(74vw,250px);
  }
 
- .dashboard {
-  gap:7px;
- }
+ .dashboard{gap:7px}
 
- .panel {
-  padding:9px;
- }
+ .panel{padding:9px}
 
- .metric {
-  font-size:13px;
- }
+ .metric{font-size:13px}
 }
 
-@media(prefers-reduced-motion:reduce) {
- *,*::before,*::after {
+@media(prefers-reduced-motion:reduce){
+
+ *,
+ *::before,
+ *::after{
   animation:none!important;
   scroll-behavior:auto!important;
  }
+
 }
 </style>
 </head>
@@ -572,19 +586,13 @@ body {
 
 
   <div class="core">
-
    <div class="core-name">A.R.I.A.</div>
-
-   <div class="core-sub">
-    NEURAL INTERFACE
-   </div>
-
-   <div class="core-state" id="coreState">
-    STANDBY
-   </div>
-
   </div>
 
+ </div>
+
+ <div class="hud-status" id="coreState">
+  STANDBY
  </div>
 
  <h1 class="hero-title">
@@ -602,9 +610,7 @@ body {
 
  <article class="panel">
 
-  <h2 class="panel-title">
-   SYSTEM STATUS
-  </h2>
+  <h2 class="panel-title">SYSTEM STATUS</h2>
 
   <div class="metric">
    <span>Core</span>
@@ -631,9 +637,7 @@ body {
 
  <article class="panel">
 
-  <h2 class="panel-title">
-   SYSTEM TELEMETRY
-  </h2>
+  <h2 class="panel-title">SYSTEM TELEMETRY</h2>
 
   <div class="metric">
    <span>Local time</span>
@@ -660,9 +664,7 @@ body {
 
  <article class="panel">
 
-  <h2 class="panel-title">
-   ACTIVITY LOG
-  </h2>
+  <h2 class="panel-title">ACTIVITY LOG</h2>
 
   <div class="activity" id="activity">
 
@@ -733,7 +735,7 @@ body {
 
 <footer class="footer">
 
- <span>A.R.I.A. // PROTOTYPE 2.5</span>
+ <span>A.R.I.A. // PROTOTYPE 2.6</span>
 
  <span>BUILT FOR THE FUTURE</span>
 
@@ -749,7 +751,7 @@ const $ = id => document.getElementById(id);
 const hud = $('hud');
 
 
-function updateClock() {
+function updateClock(){
 
  const now = new Date();
 
@@ -781,7 +783,7 @@ $('platformMetric').textContent =
  : 'WEB DEVICE';
 
 
-function updateNetwork() {
+function updateNetwork(){
 
  $('networkMetric').textContent =
   navigator.onLine ? 'CONNECTED' : 'OFFLINE';
@@ -796,11 +798,13 @@ window.addEventListener('offline',updateNetwork);
 
 
 let voiceEnabled = true;
+
 let recognition = null;
+
 let isListening = false;
 
 
-function logActivity(text) {
+function logActivity(text){
 
  const row = document.createElement('div');
 
@@ -811,14 +815,14 @@ function logActivity(text) {
 
  $('activity').prepend(row);
 
- while($('activity').children.length > 8) {
+ while($('activity').children.length > 8){
   $('activity').lastElementChild.remove();
  }
 
 }
 
 
-function escapeHTML(value) {
+function escapeHTML(value){
 
  return String(value).replace(/[&<>"']/g,c=>({
   '&':'&amp;',
@@ -831,7 +835,7 @@ function escapeHTML(value) {
 }
 
 
-function addMessage(text,who) {
+function addMessage(text,who){
 
  const msg = document.createElement('div');
 
@@ -858,7 +862,7 @@ function addMessage(text,who) {
 }
 
 
-function setState(state) {
+function setState(state){
 
  hud.classList.remove(
   'listening',
@@ -866,7 +870,7 @@ function setState(state) {
   'speaking'
  );
 
- if(state !== 'standby') {
+ if(state !== 'standby'){
   hud.classList.add(state);
  }
 
@@ -876,9 +880,9 @@ function setState(state) {
 }
 
 
-function speak(text) {
+function speak(text){
 
- if(!voiceEnabled || !('speechSynthesis' in window)) {
+ if(!voiceEnabled || !('speechSynthesis' in window)){
   return;
  }
 
@@ -902,27 +906,27 @@ function speak(text) {
 }
 
 
-function respond(input) {
+function respond(input){
 
  const q = input.toLowerCase().trim();
 
  let answer;
 
 
- if(/\b(hello|hi|hey)\b/.test(q)) {
+ if(/\b(hello|hi|hey)\b/.test(q)){
 
   answer = 'Hello! A.R.I.A. is online and ready.';
 
  }
 
- else if(q.includes('your name')) {
+ else if(q.includes('your name')){
 
   answer =
    'I am A.R.I.A., Athul’s Responsive Intelligent Assistant.';
 
  }
 
- else if(q.includes('time')) {
+ else if(q.includes('time')){
 
   answer =
    'The current time is '+
@@ -930,7 +934,7 @@ function respond(input) {
 
  }
 
- else if(q.includes('date') || q.includes('today')) {
+ else if(q.includes('date') || q.includes('today')){
 
   answer =
    'Today is '+
@@ -943,35 +947,35 @@ function respond(input) {
 
  }
 
- else if(q.includes('who are you')) {
+ else if(q.includes('who are you')){
 
   answer =
    'I am A.R.I.A., your experimental digital assistant interface.';
 
  }
 
- else if(q.includes('status')) {
+ else if(q.includes('status')){
 
   answer =
    'My interface is online. Voice features depend on browser support. A live AI service has not been connected yet.';
 
  }
 
- else if(q.includes('help')) {
+ else if(q.includes('help')){
 
   answer =
    'You can ask for the time, date, my name, or system status. More abilities will be added when an AI service is connected.';
 
  }
 
- else if(q.includes('thank')) {
+ else if(q.includes('thank')){
 
   answer =
    'You are welcome. Standing by.';
 
  }
 
- else {
+ else{
 
   answer =
    'I received your command: '+input+
@@ -1003,7 +1007,7 @@ $('chatForm').addEventListener('submit',e=>{
 
  const value = $('userInput').value.trim();
 
- if(!value) return;
+ if(!value)return;
 
  addMessage(value,'YOU');
 
@@ -1019,7 +1023,7 @@ const SpeechRecognition =
  window.webkitSpeechRecognition;
 
 
-if(SpeechRecognition) {
+if(SpeechRecognition){
 
  recognition = new SpeechRecognition();
 
@@ -1079,13 +1083,13 @@ if(SpeechRecognition) {
   if(
    !hud.classList.contains('thinking') &&
    !hud.classList.contains('speaking')
-  ) {
+  ){
    setState('standby');
   }
 
  };
 
-} else {
+}else{
 
  $('voiceStatus').textContent = 'UNAVAILABLE';
 
@@ -1098,7 +1102,7 @@ if(SpeechRecognition) {
 
 $('micBtn').addEventListener('click',()=>{
 
- if(!recognition) {
+ if(!recognition){
 
   addMessage(
    'Voice recognition is not supported by this browser. Try a supported browser and allow microphone access.',
@@ -1109,7 +1113,7 @@ $('micBtn').addEventListener('click',()=>{
 
  }
 
- if(isListening) {
+ if(isListening){
 
   recognition.stop();
 
@@ -1117,11 +1121,11 @@ $('micBtn').addEventListener('click',()=>{
 
  }
 
- try {
+ try{
 
   recognition.start();
 
- } catch(err) {
+ }catch(err){
 
   logActivity('Microphone could not start.');
 
@@ -1137,7 +1141,7 @@ $('speakBtn').addEventListener('click',()=>{
  $('speakBtn').textContent =
   voiceEnabled ? '🔊 VOICE: ON' : '🔇 VOICE: OFF';
 
- if(!voiceEnabled && 'speechSynthesis' in window) {
+ if(!voiceEnabled && 'speechSynthesis' in window){
   speechSynthesis.cancel();
  }
 
