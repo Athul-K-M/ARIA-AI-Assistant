@@ -1,0 +1,11 @@
+{
+  "name": "A.R.I.A. - Intelligent Assistant",
+  "short_name": "A.R.I.A.",
+  "description": "Athul's Responsive Intelligent Assistant",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000"
+}
